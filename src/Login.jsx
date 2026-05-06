@@ -5,7 +5,7 @@ const Login = ({ onLoginSuccess, switchToSignup }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const [showSuccess, setShowSuccess] = useState(false); // New state for custom popup
+  const [showSuccess, setShowSuccess] = useState(false);
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -19,9 +19,8 @@ const Login = ({ onLoginSuccess, switchToSignup }) => {
     // Simulate API call
     setTimeout(() => {
       setLoading(false);
-      setShowSuccess(true); // Show custom popup instead of alert
+      setShowSuccess(true);
       
-      // Delay the actual login success callback to let the user see the success message
       setTimeout(() => {
         setShowSuccess(false);
         if (onLoginSuccess) onLoginSuccess({ email });
@@ -36,7 +35,7 @@ const Login = ({ onLoginSuccess, switchToSignup }) => {
         <div style={{
           position: 'fixed',
           inset: 0,
-          backgroundColor: 'rgba(0, 0, 0, 0.15)',
+          backgroundColor: 'rgba(0, 0, 0, 0.4)', // Slightly darker for better contrast
           backdropFilter: 'blur(8px)',
           display: 'flex',
           alignItems: 'center',
@@ -44,50 +43,49 @@ const Login = ({ onLoginSuccess, switchToSignup }) => {
           zIndex: 1000,
           transition: 'all 0.3s ease'
         }}>
-          <div style={{
-            backgroundColor: '#fff',
+          <div className="login-card" style={{ // Reusing login-card class for dark mode compatibility
             padding: '40px',
-            borderRadius: '2.5rem', // Match your vibe
-            boxShadow: '0 20px 40px rgba(0,0,0,0.1)',
+            borderRadius: '2.5rem',
+            boxShadow: '0 20px 40px rgba(0,0,0,0.2)',
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
             gap: '20px',
             minWidth: '280px',
-            textAlign: 'center'
+            textAlign: 'center',
+            maxWidth: '350px'
           }}>
             {loading ? (
               <>
-                {/* Minimalist Spinner */}
                 <div className="spinner" style={{
                   width: '40px',
                   height: '40px',
-                  border: '3px solid #f3f3f3',
-                  borderTop: '3px solid #000',
+                  border: '3px solid rgba(128, 128, 128, 0.2)',
+                  borderTop: '3px solid var(--text-color, #000)',
                   borderRadius: '50%',
                   animation: 'spin 1s linear infinite'
                 }}></div>
-                <p style={{ fontWeight: '500', color: '#444' }}>Verifying details...</p>
+                <p style={{ fontWeight: '600', opacity: 0.8 }}>Verifying details...</p>
               </>
             ) : (
               <>
-                {/* Success State */}
                 <div style={{
                   width: '50px',
                   height: '50px',
-                  backgroundColor: '#f0fff4',
+                  backgroundColor: 'rgba(46, 204, 113, 0.15)',
                   borderRadius: '50%',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  color: '#000000',
-                  fontSize: '1.5rem'
+                  color: '#2ecc71',
+                  fontSize: '1.5rem',
+                  fontWeight: 'bold'
                 }}>
                   ✓
                 </div>
                 <div>
                   <h3 style={{ margin: 0, fontWeight: '700', fontSize: '1.2rem' }}>Login Successful</h3>
-                  <p style={{ margin: '5px 0 0', color: '#666' }}>Welcome to Ezeiiy Store.</p>
+                  <p style={{ margin: '5px 0 0', opacity: 0.7 }}>Welcome to Ezeiiy Store.</p>
                 </div>
               </>
             )}
@@ -97,10 +95,10 @@ const Login = ({ onLoginSuccess, switchToSignup }) => {
 
       <div className="login-card">
         <div className="login-header">
-          <p style={{ fontWeight: '700', fontSize: '1.4rem', color: '#000', marginBottom: '5px' }}>
+          <h2 style={{ fontWeight: '700', fontSize: '1.4rem', marginBottom: '8px', letterSpacing: '-0.5px' }}>
             LOGIN TO YOUR ACCOUNT
-          </p>
-          <p>Please enter your details to continue.</p>
+          </h2>
+          <p style={{ opacity: 0.6 }}>Please enter your details to continue.</p>
         </div>
         
         <form className="login-form" onSubmit={handleLogin}>
@@ -135,14 +133,16 @@ const Login = ({ onLoginSuccess, switchToSignup }) => {
           }}>
             <div className="remember-me" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
               <input type="checkbox" id="remember" style={{ cursor: 'pointer' }} />
-              <label htmlFor="remember" style={{ cursor: 'pointer', fontSize: '0.9rem' }}>Remember me</label>
+              <label htmlFor="remember" style={{ cursor: 'pointer', fontSize: '0.9rem', opacity: 0.8 }}>
+                Remember me
+              </label>
             </div>
             
             <a 
               href="#" 
               className="forgot-link" 
               onClick={(e) => e.preventDefault()}
-              style={{ fontSize: '0.9rem', color: '#666', textDecoration: 'none' }}
+              style={{ fontSize: '0.9rem', color: 'inherit', opacity: 0.6, textDecoration: 'none' }}
             >
               Forgot password?
             </a>
@@ -153,13 +153,13 @@ const Login = ({ onLoginSuccess, switchToSignup }) => {
           </button>
         </form>
         
-        <div className="login-footer" style={{ marginTop: '20px', textAlign: 'center' }}>
-          <p>
+        <div className="login-footer" style={{ marginTop: '25px', textAlign: 'center' }}>
+          <p style={{ opacity: 0.8 }}>
             New here?{' '}
             <span 
               onClick={switchToSignup} 
               style={{ 
-                color: "#000", 
+                color: "inherit", 
                 fontWeight: "700", 
                 cursor: "pointer", 
                 textDecoration: "underline",
@@ -172,11 +172,19 @@ const Login = ({ onLoginSuccess, switchToSignup }) => {
         </div>
       </div>
 
-      {/* Inline styles for the spinner animation */}
       <style>{`
         @keyframes spin {
           0% { transform: rotate(0deg); }
           100% { transform: rotate(360deg); }
+        }
+        .dark-mode .login-header h2, 
+        .dark-mode .login-footer span,
+        .dark-mode .remember-me label {
+          color: #fff !important;
+        }
+        .dark-mode .forgot-link,
+        .dark-mode .login-header p {
+          color: #aaa !important;
         }
       `}</style>
     </div>

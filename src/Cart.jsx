@@ -31,11 +31,12 @@ function Cart({ cartItems, removeItem, addToCart, decreaseQty, setPage }) {
           align-items: center;
           gap: 25px;
           padding: 20px;
-          background: #fff;
+          background: var(--card-bg, #fff);
           border-radius: 15px;
           margin-bottom: 15px;
           box-shadow: 0 2px 12px rgba(0,0,0,0.04);
           animation: slideIn 0.4s ease forwards;
+          border: 1px solid rgba(0,0,0,0.02);
         }
 
         .continue-shopping-btn {
@@ -43,8 +44,8 @@ function Cart({ cartItems, removeItem, addToCart, decreaseQty, setPage }) {
           align-items: center;
           gap: 10px;
           padding: 10px 20px;
-          background: rgba(0, 0, 0, 0.05);
-          color: #000;
+          background: rgba(128, 128, 128, 0.1);
+          color: inherit;
           border-radius: 30px;
           font-weight: 500;
           cursor: pointer;
@@ -60,11 +61,15 @@ function Cart({ cartItems, removeItem, addToCart, decreaseQty, setPage }) {
           transform: translateX(-5px);
         }
 
+        .dark-mode .continue-shopping-btn:hover {
+          background: #fff;
+          color: #000;
+        }
+
         .continue-shopping-btn:hover .arrow-icon {
           animation: arrowMove 0.8s infinite;
         }
 
-        /* FIXED FOOTER POSITIONING */
         .checkout-footer {
           position: fixed;
           bottom: 30px;
@@ -72,8 +77,8 @@ function Cart({ cartItems, removeItem, addToCart, decreaseQty, setPage }) {
           transform: translateX(-50%);
           width: 90%;
           max-width: 650px;
-          height: 100px; /* Increased height */
-          background: rgba(255, 255, 255, 0.85);
+          height: 100px;
+          background: rgba(255, 255, 255, 0.8);
           backdrop-filter: blur(20px);
           -webkit-backdrop-filter: blur(20px);
           border: 1px solid rgba(0, 0, 0, 0.05);
@@ -84,11 +89,18 @@ function Cart({ cartItems, removeItem, addToCart, decreaseQty, setPage }) {
           padding: 0 45px;
           z-index: 2000;
           box-shadow: 0 15px 45px rgba(0,0,0,0.15);
+          transition: all 0.4s ease;
+        }
+
+        .dark-mode .checkout-footer {
+          background: rgba(20, 20, 20, 0.8);
+          border: 1px solid rgba(255, 255, 255, 0.1);
+          box-shadow: 0 15px 45px rgba(0,0,0,0.4);
         }
 
         .checkout-btn {
-          background: #000;
-          color: #fff;
+          background: var(--btn-bg, #000);
+          color: var(--btn-text, #fff);
           padding: 16px 38px;
           border-radius: 50px;
           border: none;
@@ -98,50 +110,48 @@ function Cart({ cartItems, removeItem, addToCart, decreaseQty, setPage }) {
           box-shadow: 0 8px 20px rgba(0,0,0,0.15);
         }
 
-        /* --- MOBILE CART FIXES --- */
+        .dark-mode .checkout-btn {
+          background: #fff;
+          color: #000;
+        }
+
+        .qty-picker {
+          display: flex; 
+          align-items: center; 
+          gap: 15px; 
+          background: rgba(128, 128, 128, 0.08); 
+          padding: 8px 18px; 
+          border-radius: 50px; 
+          border: 1px solid rgba(128, 128, 128, 0.1);
+        }
+
+        .dark-mode .cart-list-item {
+          background: #161616;
+          border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
         @media (max-width: 600px) {
           .cart-page-wrapper {
-            padding: 20px 15px 180px 15px; /* More bottom padding for scroll */
+            padding: 20px 15px 180px 15px;
           }
-
           .cart-list-item {
-            flex-direction: row; 
             gap: 15px;
             padding: 15px;
-            align-items: center;
           }
-
           .cart-item-image-container {
             width: 80px !important;
             height: 80px !important;
           }
-
-          .cart-controls-container {
-            align-items: flex-end !important;
-            gap: 8px !important;
-          }
-
-          .qty-picker {
-            padding: 4px 12px !important;
-            gap: 10px !important;
-          }
-
-          /* Fixed: Increased spacing for Buy Now section */
           .checkout-footer {
             height: 85px;
             padding: 0 25px;
             border-radius: 35px;
-            bottom: 110px; /* Stayed clearly above your floating mobile nav */
+            bottom: 110px;
             width: 92%;
           }
-
           .checkout-btn {
             padding: 12px 24px;
             font-size: 0.9rem;
-          }
-
-          .subtotal-amount {
-            font-size: 1.2rem !important;
           }
         }
       `}</style>
@@ -156,7 +166,7 @@ function Cart({ cartItems, removeItem, addToCart, decreaseQty, setPage }) {
 
       {cartItems.length === 0 ? (
         <div style={{ textAlign: "center", padding: "100px 0" }}>
-          <p style={{ color: "#888", fontSize: "1.2rem", marginBottom: "30px" }}>Nothin in here, its kinda dry as hell...</p>
+          <p style={{ opacity: 0.5, fontSize: "1.2rem", marginBottom: "30px" }}>Nothin in here, its kinda dry as hell...</p>
           <button 
             onClick={() => setPage("home")} 
             className="checkout-btn" 
@@ -181,15 +191,15 @@ function Cart({ cartItems, removeItem, addToCart, decreaseQty, setPage }) {
               </div>
 
               <div className="cart-controls-container" style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: "15px" }}>
-                <div className="qty-picker" style={{ display: "flex", alignItems: "center", gap: "15px", background: "#f8f8f8", padding: "8px 18px", borderRadius: "50px", border: "1px solid #eee" }}>
-                  <button onClick={() => decreaseQty(item.id)} style={{ border: "none", background: "none", cursor: "pointer", fontSize: "1.2rem", fontWeight: "bold" }}>−</button>
+                <div className="qty-picker">
+                  <button onClick={() => decreaseQty(item.id)} style={{ border: "none", background: "none", cursor: "pointer", fontSize: "1.2rem", fontWeight: "bold", color: "inherit" }}>−</button>
                   <span style={{ fontWeight: "700", minWidth: "20px", textAlign: "center" }}>{item.quantity}</span>
-                  <button onClick={() => addToCart(item)} style={{ border: "none", background: "none", cursor: "pointer", fontSize: "1.2rem", fontWeight: "bold" }}>+</button>
+                  <button onClick={() => addToCart(item)} style={{ border: "none", background: "none", cursor: "pointer", fontSize: "1.2rem", fontWeight: "bold", color: "inherit" }}>+</button>
                 </div>
                 
                 <button 
                   onClick={() => removeItem(item.id)}
-                  style={{ border: "none", background: "none", color: "#888", cursor: "pointer", fontSize: "0.7rem", textDecoration: "underline" }}
+                  style={{ border: "none", background: "none", color: "inherit", opacity: 0.5, cursor: "pointer", fontSize: "0.7rem", textDecoration: "underline" }}
                 >
                   Remove
                 </button>
@@ -202,7 +212,7 @@ function Cart({ cartItems, removeItem, addToCart, decreaseQty, setPage }) {
       {cartItems.length > 0 && (
         <div className="checkout-footer">
           <div>
-            <div style={{ fontSize: "0.65rem", color: "#888", textTransform: "uppercase", letterSpacing: "1px", fontWeight: "700" }}>Subtotal</div>
+            <div style={{ fontSize: "0.65rem", opacity: 0.6, textTransform: "uppercase", letterSpacing: "1px", fontWeight: "700" }}>Subtotal</div>
             <div className="subtotal-amount" style={{ fontSize: "1.4rem", fontWeight: "900", letterSpacing: "-0.5px" }}>₹{total}</div>
           </div>
           

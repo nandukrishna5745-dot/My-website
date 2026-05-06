@@ -1,223 +1,217 @@
 import React, { useState } from 'react';
+import './App.css';
 
 const Signup = ({ onSignupSuccess, switchToLogin }) => {
   const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    age: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
-    rememberMe: false
+    fullName: "",
+    email: "",
+    password: "",
+    confirmPassword: ""
   });
+  const [loading, setLoading] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
 
-  const handleInputChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: type === 'checkbox' ? checked : value
-    }));
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSignup = (e) => {
     e.preventDefault();
-    if (formData.password !== formData.confirmPassword) {
-      alert("Passwords do not match!");
+    const { fullName, email, password, confirmPassword } = formData;
+
+    if (!fullName || !email || !password || !confirmPassword) {
+      alert("Please fill in all fields.");
       return;
     }
-    // Logic for account creation goes here
-    onSignupSuccess({ name: formData.firstName });
+    if (password !== confirmPassword) {
+      alert("Passwords do not match.");
+      return;
+    }
+
+    setLoading(true);
+
+    // Simulate API call
+    setTimeout(() => {
+      setLoading(false);
+      setShowSuccess(true);
+      
+      setTimeout(() => {
+        setShowSuccess(false);
+        if (onSignupSuccess) onSignupSuccess({ email, fullName });
+      }, 2000);
+    }, 1500);
   };
 
   return (
-    <div className="signup-container fade-in-up">
-      <style>{`
-        .signup-container {
-          max-width: 480px;
-          margin: 40px auto;
-          padding: 40px;
-          background: #fff;
-          border-radius: 28px;
-          box-shadow: 0 15px 50px rgba(0,0,0,0.03);
-        }
-
-        .signup-header {
-          text-align: center;
-          margin-bottom: 35px;
-        }
-
-        .signup-header h2 {
-          font-size: 2rem;
-          font-weight: 800;
-          letter-spacing: -0.8px;
-          margin-bottom: 8px;
-          color: #000;
-        }
-
-        .signup-header p {
-          color: #777;
-          font-size: 0.9rem;
-        }
-
-        .form-grid {
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 15px;
-        }
-
-        .full-width { grid-column: span 2; }
-
-        .input-group {
-          margin-bottom: 18px;
-        }
-
-        .input-group label {
-          display: block;
-          font-size: 0.7rem;
-          font-weight: 800;
-          text-transform: uppercase;
-          margin-bottom: 8px;
-          margin-left: 4px;
-          letter-spacing: 1px;
-          color: #999;
-        }
-
-        .input-group input {
-          width: 100%;
-          padding: 15px 20px;
-          border: 1.5px solid #f0f0f0;
-          border-radius: 14px;
-          font-size: 0.95rem;
-          transition: all 0.3s ease;
-          background: #fafafa;
-          box-sizing: border-box;
-        }
-
-        .input-group input:focus {
-          outline: none;
-          border-color: #000;
-          background: #fff;
-          box-shadow: 0 8px 20px rgba(0,0,0,0.04);
-        }
-
-        .remember-me-section {
-          display: flex;
-          align-items: center;
-          gap: 10px;
-          margin: 20px 0 30px 0;
-          cursor: pointer;
-        }
-
-        .remember-me-section input {
-          width: 20px;
-          height: 20px;
-          accent-color: #000;
-          cursor: pointer;
-        }
-
-        .remember-me-section span {
-          font-size: 0.85rem;
-          font-weight: 500;
-          color: #555;
-        }
-
-        .create-acc-btn {
-          width: 100%;
-          padding: 18px;
-          background: #000;
-          color: #fff;
-          border: none;
-          border-radius: 16px;
-          font-weight: 700;
-          font-size: 1rem;
-          letter-spacing: 0.5px;
-          cursor: pointer;
-          transition: all 0.3s cubic-bezier(0.2, 1, 0.2, 1);
-        }
-
-        .create-acc-btn:hover {
-          background: #222;
-          transform: translateY(-2px);
-          box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-        }
-
-        .login-redirect {
-          text-align: center;
-          margin-top: 25px;
-          font-size: 0.9rem;
-          color: #666;
-        }
-
-        .login-redirect span {
-          color: #000;
-          font-weight: 800;
-          cursor: pointer;
-          text-decoration: underline;
-          margin-left: 5px;
-        }
-
-        @media (max-width: 500px) {
-          .signup-container { margin: 15px; padding: 30px 20px; }
-          .form-grid { grid-template-columns: 1fr; }
-          .full-width { grid-column: span 1; }
-        }
-      `}</style>
-
-      <div className="signup-header">
-        <h2>Create Account</h2>
-        <p>Join our community today</p>
-      </div>
-
-      <form onSubmit={handleSubmit}>
-        <div className="form-grid">
-          <div className="input-group">
-            <label>First Name</label>
-            <input type="text" name="firstName" placeholder="Nandu" required onChange={handleInputChange} />
-          </div>
-          <div className="input-group">
-            <label>Last Name</label>
-            <input type="text" name="lastName" placeholder="Krishna" required onChange={handleInputChange} />
-          </div>
-          
-          <div className="input-group full-width">
-            <label>Age</label>
-            <input type="number" name="age" placeholder="e.g. 25" required onChange={handleInputChange} />
-          </div>
-
-          <div className="input-group full-width">
-            <label>Email Address</label>
-            <input type="email" name="email" placeholder="nandu@example.com" required onChange={handleInputChange} />
-          </div>
-
-          <div className="input-group full-width">
-            <label>Create New Password</label>
-            <input type="password" name="password" placeholder="••••••••" required onChange={handleInputChange} />
-          </div>
-
-          <div className="input-group full-width">
-            <label>Re-enter New Password</label>
-            <input type="password" name="confirmPassword" placeholder="••••••••" required onChange={handleInputChange} />
+    <div className="login-container">
+      {/* --- SUCCESS/LOADING OVERLAY --- */}
+      {(loading || showSuccess) && (
+        <div style={{
+          position: 'fixed',
+          inset: 0,
+          backgroundColor: 'rgba(0, 0, 0, 0.4)',
+          backdropFilter: 'blur(8px)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          zIndex: 1000,
+          transition: 'all 0.3s ease'
+        }}>
+          <div className="login-card" style={{
+            padding: '40px',
+            borderRadius: '2.5rem',
+            boxShadow: '0 20px 40px rgba(0,0,0,0.2)',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            gap: '20px',
+            minWidth: '280px',
+            textAlign: 'center',
+            maxWidth: '350px'
+          }}>
+            {loading ? (
+              <>
+                <div className="spinner" style={{
+                  width: '40px',
+                  height: '40px',
+                  border: '3px solid rgba(128, 128, 128, 0.2)',
+                  borderTop: '3px solid var(--text-color, #000)',
+                  borderRadius: '50%',
+                  animation: 'spin 1s linear infinite'
+                }}></div>
+                <p style={{ fontWeight: '600', opacity: 0.8 }}>Creating account...</p>
+              </>
+            ) : (
+              <>
+                <div style={{
+                  width: '50px',
+                  height: '50px',
+                  backgroundColor: 'rgba(46, 204, 113, 0.15)',
+                  borderRadius: '50%',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  color: '#2ecc71',
+                  fontSize: '1.5rem',
+                  fontWeight: 'bold'
+                }}>
+                  ✓
+                </div>
+                <div>
+                  <h3 style={{ margin: 0, fontWeight: '700', fontSize: '1.2rem' }}>Account Created!</h3>
+                  <p style={{ margin: '5px 0 0', opacity: 0.7 }}>Welcome to the family.</p>
+                </div>
+              </>
+            )}
           </div>
         </div>
+      )}
 
-        <label className="remember-me-section">
-          <input 
-            type="checkbox" 
-            name="rememberMe" 
-            checked={formData.rememberMe} 
-            onChange={handleInputChange} 
-          />
-          <span>Remember me in the future</span>
-        </label>
+      <div className="login-card">
+        <div className="login-header">
+          <h2 style={{ fontWeight: '700', fontSize: '1.4rem', marginBottom: '8px', letterSpacing: '-0.5px' }}>
+            CREATE AN ACCOUNT
+          </h2>
+          <p style={{ opacity: 0.6 }}>Join Ezeiiy Store for a better experience.</p>
+        </div>
+        
+        <form className="login-form" onSubmit={handleSignup}>
+          <div className="input-group">
+            <label>Full Name</label>
+            <input 
+              type="text" 
+              name="fullName"
+              placeholder="e.g. John Doe" 
+              value={formData.fullName}
+              onChange={handleChange}
+              required 
+            />
+          </div>
 
-        <button type="submit" className="create-acc-btn">
-          Create Account
-        </button>
-      </form>
+          <div className="input-group">
+            <label>Email Address</label>
+            <input 
+              type="email" 
+              name="email"
+              placeholder="e.g. name@example.com" 
+              value={formData.email}
+              onChange={handleChange}
+              required 
+            />
+          </div>
+          
+          <div className="input-group">
+            <label>Password</label>
+            <input 
+              type="password" 
+              name="password"
+              placeholder="••••••••" 
+              value={formData.password}
+              onChange={handleChange}
+              required 
+            />
+          </div>
 
-      <div className="login-redirect">
-        Already a member? <span onClick={switchToLogin}>Log in here</span>
+          <div className="input-group">
+            <label>Confirm Password</label>
+            <input 
+              type="password" 
+              name="confirmPassword"
+              placeholder="••••••••" 
+              value={formData.confirmPassword}
+              onChange={handleChange}
+              required 
+            />
+          </div>
+          
+          <div style={{ marginBottom: '25px', textAlign: 'left' }}>
+            <div style={{ display: 'flex', alignItems: 'flex-start', gap: '8px' }}>
+              <input type="checkbox" id="terms" required style={{ cursor: 'pointer', marginTop: '4px' }} />
+              <label htmlFor="terms" style={{ cursor: 'pointer', fontSize: '0.85rem', opacity: 0.7, lineHeight: '1.4' }}>
+                I agree to the Terms of Service and Privacy Policy.
+              </label>
+            </div>
+          </div>
+          
+          <button type="submit" className="login-button" disabled={loading}>
+            {loading ? "Creating..." : "Sign Up"}
+          </button>
+        </form>
+        
+        <div className="login-footer" style={{ marginTop: '25px', textAlign: 'center' }}>
+          <p style={{ opacity: 0.8 }}>
+            Already have an account?{' '}
+            <span 
+              onClick={switchToLogin} 
+              style={{ 
+                color: "inherit", 
+                fontWeight: "700", 
+                cursor: "pointer", 
+                textDecoration: "underline",
+                marginLeft: "5px" 
+              }}
+            >
+              Log in instead
+            </span>
+          </p>
+        </div>
       </div>
+
+      <style>{`
+        @keyframes spin {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+        .dark-mode .login-header h2, 
+        .dark-mode .login-footer span,
+        .dark-mode label {
+          color: #fff !important;
+        }
+        .dark-mode .login-header p,
+        .dark-mode .login-footer p {
+          color: #aaa !important;
+        }
+      `}</style>
     </div>
   );
 };

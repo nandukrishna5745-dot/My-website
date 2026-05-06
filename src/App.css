@@ -1,5 +1,80 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700;800&display=swap');
 
+/* --- DARK MODE OVERRIDES (ADDED) --- */
+.dark-mode {
+  background-color: #0a0a0a !important;
+  color: #f5f5f5 !important;
+}
+
+.dark-mode .header {
+  background-color: rgba(10, 10, 10, 0.8) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.dark-mode .logo,
+.dark-mode .header-right .nav-item,
+.dark-mode .product-title,
+.dark-mode .price,
+.dark-mode .input-group label,
+.dark-mode .login-header h2 {
+  color: #ffffff !important;
+}
+
+.dark-mode .product-card,
+.dark-mode .login-card,
+.dark-mode .contact-card-container {
+  background: #161616 !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+}
+
+.dark-mode .image-container {
+  background-color: #1f1f1f !important;
+}
+
+.dark-mode .add-to-cart-btn,
+.dark-mode .login-button {
+  background: #ffffff !important;
+  color: #000000 !important;
+  border-color: #ffffff !important;
+}
+
+.dark-mode .add-to-cart-btn.in-cart-active {
+  background: transparent !important;
+  color: #666 !important;
+  border: 1.8px solid #333 !important;
+}
+
+.dark-mode .input-group input {
+  background-color: #222 !important;
+  border-color: #333 !important;
+  color: #fff !important;
+}
+
+.dark-mode .loading-overlay {
+  background: rgba(10, 10, 10, 0.7) !important;
+}
+
+.dark-mode .spinner {
+  border-color: rgba(255, 255, 255, 0.1);
+  border-top-color: #fff;
+}
+
+.dark-mode .mobile-bottom-nav {
+  background: rgba(20, 20, 20, 0.85) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+.dark-mode .mobile-nav-item {
+  color: #999 !important;
+}
+
+.dark-mode .mobile-nav-item.active {
+  color: #fff !important;
+}
+
+/* --- ORIGINAL CODE STARTS HERE --- */
+
 body {
   margin: 0;
   padding: 0;
@@ -9,6 +84,7 @@ body {
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.4s ease, color 0.4s ease;
 }
 
 * {
@@ -20,7 +96,7 @@ html {
   scroll-behavior: smooth;
 }
 
-/* --- HEADER SECTION --- */
+/* --- HEADER SECTION (UPDATED FOR LOGO) --- */
 .header {
   display: flex;
   align-items: center;
@@ -72,6 +148,7 @@ html {
   margin: 0;
 }
 
+/* Wrapper for Nav and Logo */
 .header-actions-wrapper {
   display: flex;
   align-items: center;
@@ -88,6 +165,7 @@ html {
   align-items: center;
 }
 
+/* The New Logo Space */
 .header-logo-wrapper {
   width: 45px;
   height: 45px;
@@ -418,43 +496,6 @@ html {
   box-shadow: 0 10px 25px rgba(0,0,0,0.15);
 }
 
-/* --- CART PAGE & BUTTON FIXES --- */
-.cart-container {
-  max-width: 1000px;
-  margin: 0 auto;
-  padding: 40px 20px;
-}
-
-.cart-summary {
-  margin-top: 40px;
-  padding: 40px;
-  background: #ffffff;
-  border-radius: 32px;
-  border: 1px solid rgba(0,0,0,0.05);
-}
-
-.buy-now-btn {
-  width: 100%;
-  background: #000;
-  color: #fff;
-  padding: 22px;
-  border-radius: 20px;
-  font-weight: 700;
-  font-size: 1rem;
-  border: none;
-  cursor: pointer;
-  margin-top: 35px; /* Added spacing to separate from price details */
-  transition: all 0.3s cubic-bezier(0.2, 1, 0.2, 1);
-  text-transform: uppercase;
-  letter-spacing: 2px;
-}
-
-.buy-now-btn:hover {
-  background: #222;
-  transform: translateY(-3px);
-  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-}
-
 /* --- CONTACT PAGE --- */
 .contact-page {
   animation: contactFadeIn 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
@@ -511,23 +552,6 @@ html {
     width: 38px;
     height: 38px;
     display: flex !important;
-  }
-
-  /* CART MOBILE UPDATES */
-  .cart-container {
-    padding: 20px 15px 140px 15px; /* Added extra bottom padding */
-  }
-
-  .cart-summary {
-    padding: 25px;
-    margin-top: 20px;
-  }
-
-  .buy-now-btn {
-    padding: 20px;
-    margin-top: 40px; /* Stronger separation on small screens */
-    margin-bottom: 20px;
-    font-size: 0.9rem;
   }
 
   .mobile-bottom-nav {
