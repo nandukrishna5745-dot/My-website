@@ -106,7 +106,7 @@ const Login = ({ onLoginSuccess, switchToSignup }) => {
             <label>Email Address</label>
             <input 
               type="email" 
-              placeholder="e.g. name@example.com" 
+              placeholder="e.g. nandu@example.com" 
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required 
