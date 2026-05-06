@@ -187,11 +187,19 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [isChangingPage, setIsChangingPage] = useState(false);
   
-  // NEW THEME STATE
   const [darkMode, setDarkMode] = useState(false);
   
   const [visibleProducts, setVisibleProducts] = useState(12); 
   const [isScrollingLoading, setIsScrollingLoading] = useState(false);
+
+  // FIX FOR WHITE BACKGROUND ON MOBILE SCROLL/OVERSCROLL
+  useEffect(() => {
+    if (darkMode) {
+      document.body.classList.add('dark-mode');
+    } else {
+      document.body.classList.remove('dark-mode');
+    }
+  }, [darkMode]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -272,6 +280,11 @@ function App() {
         .dark-mode {
           background-color: #0a0a0a;
           color: #ffffff;
+        }
+
+        /* Ensure body background matches in dark mode to fix white bar issue */
+        body.dark-mode {
+          background-color: #0a0a0a !important;
         }
 
         .header {
@@ -372,6 +385,11 @@ function App() {
           to { opacity: 1; transform: translateY(0); }
         }
 
+        @keyframes toastSlideUp {
+          from { opacity: 0; transform: translate(-50%, 20px); }
+          to { opacity: 1; transform: translate(-50%, 0); }
+        }
+
         .fade-in-up {
           animation: fadeInUp 0.6s ease forwards;
         }
@@ -414,14 +432,14 @@ function App() {
           position: fixed;
           bottom: 100px;
           left: 50%;
-          transform: translateX(-50%);
+          transform: translateX(-50%); /* Fix: Center alignment for PC */
           background: #000;
           color: #fff;
           padding: 12px 24px;
           border-radius: 30px;
           z-index: 15000;
           font-weight: 600;
-          animation: fadeInUp 0.4s ease;
+          animation: toastSlideUp 0.4s ease forwards;
         }
 
         .dark-mode .toast-popup {
@@ -431,6 +449,14 @@ function App() {
 
         @media (max-width: 768px) {
           .header-right { display: none; }
+          
+          /* Force 2 Columns on Phone */
+          .product-grid {
+            grid-template-columns: 1fr 1fr !important;
+            padding: 20px 3%;
+            gap: 15px;
+          }
+
           .mobile-bottom-nav {
             display: flex;
             position: fixed;
@@ -487,7 +513,6 @@ function App() {
 
         <div className="header-right" style={{ display: 'flex', alignItems: 'center', gap: '30px' }}>
           
-          {/* THEME SWITCHER - DESKTOP */}
           <div className="nav-item" onClick={toggleTheme}>
             {darkMode ? (
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72l1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
@@ -579,7 +604,6 @@ function App() {
           <span>Home</span>
         </div>
 
-        {/* THEME SWITCHER - MOBILE */}
         <div className="mobile-nav-item" onClick={toggleTheme}>
           {darkMode ? (
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72l1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
