@@ -27,7 +27,7 @@ html {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 20px 60px; 
+  padding: 0 60px; 
   background-color: rgba(255, 251, 244, 0.75); 
   backdrop-filter: blur(15px);
   -webkit-backdrop-filter: blur(15px);
@@ -77,7 +77,7 @@ html {
 }
 
 .header-right {
-  display: flex;
+  display: flex !important; /* Forces visibility on desktop */
   gap: 25px;
   justify-content: flex-end;
   align-items: center;
@@ -98,6 +98,8 @@ html {
   align-items: center;
   gap: 8px;
   cursor: pointer;
+  visibility: visible; /* Ensures individual items are seen */
+  opacity: 1;
 }
 
 .header-right .nav-item:hover {

@@ -145,11 +145,11 @@ function App() {
           border: 1.5px solid #000;
           border-radius: 12px;
           font-weight: 600;
-          cursor: pointer;
-          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-          margin-top: 15px;
           font-size: 0.85rem;
           letter-spacing: 0.5px;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          margin-top: 15px;
         }
 
         .add-to-cart-btn:hover {
@@ -162,12 +162,6 @@ function App() {
           color: #7a7a7a;
           border: 1.5px solid #d1d1d1;
           cursor: default;
-        }
-
-        .add-to-cart-btn.in-cart-active:hover {
-          background: rgba(0, 0, 0, 0.02);
-          color: #000;
-          border-color: #000;
         }
 
         .btn-content {
@@ -212,20 +206,28 @@ function App() {
         .nav-item {
           display: flex;
           align-items: center;
-          gap: 6px;
+          gap: 8px;
           cursor: pointer;
           font-weight: 600;
           font-size: 0.8rem;
           text-transform: uppercase;
           transition: all 0.4s ease;
           letter-spacing: 0.5px;
+          position: relative;
         }
         .nav-item:hover {
-          letter-spacing: 1.5px;
           opacity: 0.5;
         }
 
-        /* Glass Floating Bottom Nav */
+        .cart-badge-desktop {
+          background: #000;
+          color: #fff;
+          font-size: 10px;
+          padding: 2px 6px;
+          border-radius: 10px;
+          margin-left: -4px;
+        }
+
         .mobile-bottom-nav { 
           display: none; 
         }
@@ -288,14 +290,35 @@ function App() {
           </span>
         </div>
         
-        <h1 className="logo" onClick={() => handlePageChange("home")}>
+        <h1 className="logo" style={{cursor: 'pointer', pointerEvents: 'auto'}} onClick={() => handlePageChange("home")}>
           Ezeiiy Store
         </h1>
 
         <div className="header-right">
+          {/* LOGIN ICON FOR DESKTOP */}
+          {user ? (
+            <span className="nav-item" onClick={() => { setUser(null); handlePageChange("home"); }}>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+              <span>Logout</span>
+            </span>
+          ) : (
+            <span className={`nav-item ${page === "login" ? "active" : ""}`} onClick={() => handlePageChange("login")}>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+              <span>Login</span>
+            </span>
+          )}
+
+          {/* CONTACT LINK */}
           <span className="nav-item" onClick={() => handlePageChange("contact")}>
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
             <span>Contact</span>
+          </span>
+
+          {/* CART ICON FOR DESKTOP */}
+          <span className={`nav-item ${page === "cart" ? "active" : ""}`} onClick={() => handlePageChange("cart")}>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+            <span>Cart</span>
+            {cartItems.length > 0 && <span className="cart-badge-desktop">{cartItems.length}</span>}
           </span>
         </div>
       </header>
@@ -322,7 +345,6 @@ function App() {
 
       <Analytics />
 
-      {}
       <nav className="mobile-bottom-nav">
         <div className={`mobile-nav-item ${page === "home" ? "active" : ""}`} onClick={() => handlePageChange("home")}>
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>

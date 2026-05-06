@@ -6,7 +6,7 @@ const Login = ({ onLoginSuccess }) => {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
-  // Handle Mock Login
+
   const handleLogin = (e) => {
     e.preventDefault();
     if (!email || !password) {
@@ -14,12 +14,11 @@ const Login = ({ onLoginSuccess }) => {
       return;
     }
     setLoading(true);
-    
-    // Simulate a network delay
+   
     setTimeout(() => {
       setLoading(false);
       alert("Success! Welcome back to Ezeiiy Store.");
-      if (onLoginSuccess) onLoginSuccess({ email }); // Updates the user state in App.jsx
+      if (onLoginSuccess) onLoginSuccess({ email }); 
     }, 1000);
   };
 
