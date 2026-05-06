@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import './App.css';
 
-// Added switchToSignup to the destructured props
 const Login = ({ onLoginSuccess, switchToSignup }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -55,12 +54,30 @@ const Login = ({ onLoginSuccess, switchToSignup }) => {
             />
           </div>
           
-          <div className="form-options">
-            <div className="remember-me">
-              <input type="checkbox" id="remember" />
-              <label htmlFor="remember">Remember me</label>
+          {/* Fix: Added display:flex and justify-content:space-between 
+              to separate the checkbox and the link. 
+              Added marginBottom: '25px' to push the button further down.
+          */}
+          <div className="form-options" style={{ 
+            display: 'flex', 
+            justifyContent: 'space-between', 
+            alignItems: 'center', 
+            marginBottom: '25px', 
+            marginTop: '10px' 
+          }}>
+            <div className="remember-me" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <input type="checkbox" id="remember" style={{ cursor: 'pointer' }} />
+              <label htmlFor="remember" style={{ cursor: 'pointer', fontSize: '0.9rem' }}>Remember me</label>
             </div>
-            <a href="#" className="forgot-link" onClick={(e) => e.preventDefault()}>Forgot password?</a>
+            
+            <a 
+              href="#" 
+              className="forgot-link" 
+              onClick={(e) => e.preventDefault()}
+              style={{ fontSize: '0.9rem', color: '#666', textDecoration: 'none' }}
+            >
+              Forgot password?
+            </a>
           </div>
           
           <button type="submit" className="login-button" disabled={loading}>
@@ -68,11 +85,11 @@ const Login = ({ onLoginSuccess, switchToSignup }) => {
           </button>
         </form>
         
-        <div className="login-footer">
+        <div className="login-footer" style={{ marginTop: '20px', textAlign: 'center' }}>
           <p>
             New here?{' '}
             <span 
-              onClick={switchToSignup} // Updated to use the prop for redirection
+              onClick={switchToSignup} 
               style={{ 
                 color: "#000", 
                 fontWeight: "700", 

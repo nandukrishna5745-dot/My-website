@@ -4,7 +4,8 @@ import './App.css';
 import Cart from './Cart';
 import Login from './Login';
 import Contact from './Contact';
-import Signup from './Signup'; // Integrated the new Signup component
+import Signup from './Signup'; 
+import myLogo from './assets/logo.png'; 
 
 const products = [
   { id: 1, name: "Minimal Chair", price: 3655, rating: 4.5, status: "IN STOCK", image: "https://plus.unsplash.com/premium_photo-1681558314333-fb036f1df542?q=80&w=1332&auto=format&fit=crop" },
@@ -40,7 +41,7 @@ const ProductCard = ({ product, addToCart, cartItems, index }) => {
       <div className={`status ${product.status === "OUT OF STOCK" ? "out-of-stock" : "in-stock"}`}>
         {product.status === "OUT OF STOCK" ? "○ OUT OF STOCK" : "● IN STOCK"}
       </div>
-      
+    
       <button
         className={`add-to-cart-btn ${isInCart ? "in-cart-active" : ""}`}
         disabled={product.status === "OUT OF STOCK"}
@@ -275,7 +276,6 @@ function App() {
           margin-left: -4px;
         }
 
-        /* Updated Header Styles */
         .header {
           display: flex;
           justify-content: space-between;
@@ -284,14 +284,15 @@ function App() {
         }
 
         .header-logo-wrapper {
-          width: 40px;
-          height: 40px;
+          width: 55px;
+          height: 55px;
           border-radius: 50%;
-          background-color: #eee; /* Placeholder bg color */
+          background-color: #eee;
           overflow: hidden;
           display: flex;
           justify-content: center;
           align-items: center;
+          flex-shrink: 0;
         }
 
         .header-logo-img {
@@ -303,7 +304,7 @@ function App() {
         .mobile-bottom-nav { display: none; }
 
         @media (max-width: 768px) {
-          .header-right { display: none; } /* Hide desktop nav on mobile header as requested */
+          .header-right { display: none; }
           
           .mobile-bottom-nav { 
             display: flex; 
@@ -353,17 +354,19 @@ function App() {
         </div>
       )}
 
-      {showPopup && <div className="toast-popup">Added to Cart ✔</div>}
+      {showPopup && <div className="toast-popup">Item added to cart!</div>}
 
       <header className="header">
-        {/* Removed header-left div with home icon */}
-        
-        <h1 className="logo" style={{cursor: 'pointer', pointerEvents: 'auto', margin: 0}} onClick={() => handlePageChange("home")}>
-          Ezeiiy Store
-        </h1>
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          <div className="header-logo-wrapper">
+            <img src={myLogo} alt="Store Logo" className="header-logo-img" />
+          </div>
+          <h1 className="logo" style={{cursor: 'pointer', pointerEvents: 'auto', margin: '0 0 0 15px'}} onClick={() => handlePageChange("home")}>
+            Ezeiiy Store
+          </h1>
+        </div>
 
         <div className="header-right" style={{ display: 'flex', alignItems: 'center', gap: '25px' }}>
-          {/* Desktop Navigation Items */}
           {user ? (
             <span className="nav-item" onClick={() => { setUser(null); handlePageChange("home"); }}>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
@@ -386,12 +389,6 @@ function App() {
             <span>Cart</span>
             {cartItems.length > 0 && <span className="cart-badge-desktop">{cartItems.length}</span>}
           </span>
-
-          {/* New Round Logo Placeholder */}
-          <div className="header-logo-wrapper">
-             {/* Manually add your logo src here */}
-            <img src="" alt="" className="header-logo-img" />
-          </div>
         </div>
       </header>
 
@@ -409,7 +406,6 @@ function App() {
                 />
               ))}
             </main>
-
             {isScrollingLoading && visibleProducts < products.length && (
               <div className="scroll-loading-container">
                 <div className="spinner"></div>
@@ -445,7 +441,6 @@ function App() {
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
           <span>Home</span>
         </div>
-
         {user ? (
           <div className="mobile-nav-item" onClick={() => { setUser(null); handlePageChange("home"); }}>
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
@@ -457,7 +452,6 @@ function App() {
             <span>Login</span>
           </div>
         )}
-
         <div className={`mobile-nav-item ${page === "cart" ? "active" : ""}`} onClick={() => handlePageChange("cart")} style={{ position: "relative" }}>
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
           {cartItems.length > 0 && <span className="cart-badge-mobile">{cartItems.length}</span>}

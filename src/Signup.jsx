@@ -172,11 +172,11 @@ const Signup = ({ onSignupSuccess, switchToLogin }) => {
         <div className="form-grid">
           <div className="input-group">
             <label>First Name</label>
-            <input type="text" name="firstName" placeholder="John" required onChange={handleInputChange} />
+            <input type="text" name="firstName" placeholder="Nandu" required onChange={handleInputChange} />
           </div>
           <div className="input-group">
             <label>Last Name</label>
-            <input type="text" name="lastName" placeholder="Doe" required onChange={handleInputChange} />
+            <input type="text" name="lastName" placeholder="Krishna" required onChange={handleInputChange} />
           </div>
           
           <div className="input-group full-width">

@@ -1,6 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700;800&display=swap');
 
-
 body {
   margin: 0;
   padding: 0;
@@ -21,12 +20,11 @@ html {
   scroll-behavior: smooth;
 }
 
-
-
+/* --- HEADER SECTION (UPDATED FOR LOGO) --- */
 .header {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-between; 
   padding: 0 60px; 
   background-color: rgba(255, 251, 244, 0.75); 
   backdrop-filter: blur(15px);
@@ -60,29 +58,56 @@ html {
   transform: scale(0.9);
 }
 
+/* FIXED: Removed absolute positioning so it doesn't overlap logo on mobile */
 .logo {
   font-family: 'Space Grotesk', sans-serif;
   font-size: 42px; 
   letter-spacing: 8px; 
   font-weight: 800; 
   text-transform: uppercase;
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
   white-space: nowrap;
-  cursor: default;
-  pointer-events: none; 
+  cursor: pointer;
+  pointer-events: auto; 
   user-select: none;
   transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+  margin: 0;
+}
+
+/* Wrapper for Nav and Logo */
+.header-actions-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+  z-index: 10;
+  flex: 1;
+  justify-content: flex-end;
 }
 
 .header-right {
-  display: flex !important; /* Forces visibility on desktop */
+  display: flex !important;
   gap: 25px;
   justify-content: flex-end;
   align-items: center;
-  z-index: 10;
-  flex: 1;
+}
+
+/* The New Logo Space */
+.header-logo-wrapper {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  background-color: #eee;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border: 1px solid rgba(0,0,0,0.05);
+}
+
+.header-logo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .header-right .nav-item {
@@ -98,7 +123,7 @@ html {
   align-items: center;
   gap: 8px;
   cursor: pointer;
-  visibility: visible; /* Ensures individual items are seen */
+  visibility: visible; 
   opacity: 1;
 }
 
@@ -107,8 +132,7 @@ html {
   transform: translateY(-1px);
 }
 
-
-
+/* --- ANIMATIONS --- */
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
@@ -136,7 +160,7 @@ html {
   to { opacity: 1; transform: translateY(0); }
 }
 
-
+/* --- OVERLAYS & SPINNERS --- */
 .loading-overlay {
   position: fixed;
   top: 0; 
@@ -161,8 +185,7 @@ html {
   animation: spin 0.85s cubic-bezier(0.4, 0, 0.2, 1) infinite;
 }
 
-
-
+/* --- PRODUCT GRID --- */
 .product-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -255,8 +278,6 @@ html {
 .in-stock { color: #2ecc71; }
 .out-of-stock { color: #e74c3c; }
 
-
-
 .add-to-cart-btn {
   font-family: 'Inter', sans-serif;
   width: 100%;
@@ -287,19 +308,12 @@ html {
   cursor: default;
 }
 
-.add-to-cart-btn.in-cart-active:hover {
-  background: rgba(0, 0, 0, 0.03);
-  color: #000;
-  border-color: #000;
-}
-
 .add-to-cart-btn:disabled {
   background: #f0f0f0;
   border-color: #f0f0f0;
   color: #bfbfbf;
   cursor: not-allowed;
 }
-
 
 .toast-popup {
   font-family: 'Inter', sans-serif;
@@ -318,7 +332,7 @@ html {
   animation: slideFade 2s cubic-bezier(0.19, 1, 0.22, 1) forwards;
 }
 
-
+/* --- LOGIN & FORMS --- */
 .login-container {
   min-height: 85vh;
   display: flex;
@@ -351,10 +365,6 @@ html {
   color: #999;
   font-size: 1rem;
   margin-bottom: 45px;
-}
-
-.login-form {
-  text-align: left;
 }
 
 .input-group {
@@ -390,27 +400,6 @@ html {
   box-shadow: 0 0 0 5px rgba(0,0,0,0.03);
 }
 
-.form-options {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 40px;
-  font-size: 0.9rem;
-}
-
-.remember-me {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.remember-me input {
-  width: 20px;
-  height: 20px;
-  cursor: pointer;
-  accent-color: #000;
-}
-
 .login-button {
   width: 100%;
   padding: 20px;
@@ -432,7 +421,7 @@ html {
   box-shadow: 0 10px 25px rgba(0,0,0,0.15);
 }
 
-
+/* --- CONTACT PAGE --- */
 .contact-page {
   animation: contactFadeIn 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   padding: 80px 25px;
@@ -461,25 +450,33 @@ html {
   display: none !important;
 }
 
+/* --- RESPONSIVE MEDIA QUERIES --- */
 @media (max-width: 768px) {
   
   .header {
-    padding: 15px 25px;
+    padding: 15px 20px;
     height: 75px;
   }
 
   .logo {
-    position: static;
-    transform: none;
     font-size: 24px;
     letter-spacing: 4px;
     flex: 1;
-    text-align: center;
-    pointer-events: auto;
+    text-align: left; /* Aligns Ezeiiy Store to the left */
+  }
+
+  .header-actions-wrapper {
+    flex: 0; /* Shrinks the right side wrapper to just fit the logo */
   }
 
   .header-right {
-    display: none !important;
+    display: none !important; /* Hides desktop Login/Cart top nav */
+  }
+
+  .header-logo-wrapper {
+    width: 38px;
+    height: 38px;
+    display: flex !important; /* Forces logo visible on mobile */
   }
 
   .mobile-bottom-nav {
