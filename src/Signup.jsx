@@ -186,7 +186,7 @@ const Signup = ({ onSignupSuccess, switchToLogin }) => {
 
           <div className="input-group full-width">
             <label>Email Address</label>
-            <input type="email" name="email" placeholder="john@example.com" required onChange={handleInputChange} />
+            <input type="email" name="email" placeholder="nandu@example.com" required onChange={handleInputChange} />
           </div>
 
           <div className="input-group full-width">
