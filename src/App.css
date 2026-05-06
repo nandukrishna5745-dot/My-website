@@ -8,26 +8,33 @@ body {
   overflow-x: hidden;
 }
 
+/* --- TOP HEADER --- */
 .header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 40px 60px;
+  padding: 20px 60px; 
   background-color: rgba(255, 251, 244, 0.75); 
   backdrop-filter: blur(15px);
   -webkit-backdrop-filter: blur(15px);
   position: sticky;
   top: 0;
   width: 100%;
+  height: 90px;
   box-sizing: border-box;
   z-index: 10000;
-  transition: padding 0.3s ease;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  z-index: 10;
+  flex: 1;
 }
 
 .menu-icon {
   font-size: 24px;
   cursor: pointer;
-  z-index: 10;
 }
 
 .logo {
@@ -36,27 +43,22 @@ body {
   letter-spacing: 8px; 
   font-weight: 800; 
   text-transform: uppercase;
-  cursor: pointer;
-  flex: 2;
-  text-align: center;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
   white-space: nowrap;
-  transition: font-size 0.3s ease;
-}
-
-.header-left {
-  flex: 1;
-  display: flex;
-  justify-content: flex-start;
-  z-index: 10;
+  cursor: default;
+  pointer-events: none; 
+  user-select: none;
 }
 
 .header-right {
-  flex: 1;
   display: flex;
   gap: 25px;
   justify-content: flex-end;
   align-items: center;
   z-index: 10;
+  flex: 1;
 }
 
 .header-right a {
@@ -485,86 +487,89 @@ body {
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* --- NEW RESPONSIVE STYLES --- */
-
-@media (max-width: 1024px) {
-  .header {
-    padding: 25px 40px;
-  }
-  .logo {
-    font-size: 32px;
-    letter-spacing: 5px;
-  }
+/* --- BOTTOM BAR --- */
+.bottom-nav {
+  display: none;
 }
+
+.cart-badge-bottom {
+  position: absolute;
+  top: -8px;
+  right: -10px;
+  background: #000;
+  color: #fff;
+  font-size: 10px;
+  padding: 2px 6px;
+  border-radius: 50%;
+  font-weight: 700;
+}
+
+/* --- MOBILE STYLES (Fixed Hierarchy) --- */
 
 @media (max-width: 768px) {
   .header {
     padding: 15px 20px;
-    gap: 10px;
+    height: 70px;
   }
 
   .logo {
+    position: static;
+    transform: none;
     font-size: 22px;
     letter-spacing: 3px;
-    flex: 1.5;
+    text-align: center;
+    flex: 1;
+    margin: 0;
+    pointer-events: auto;
+  }
+
+  .header-left, .header-right {
+    flex: 0;
   }
 
   .header-right {
-    gap: 18px;
-    flex: 1;
-  }
-
-  /* Hides "Login" and "Contact" text labels on mobile */
-  .header-right a span {
     display: none !important;
   }
 
-  .header-right svg {
-    width: 22px;
-    height: 22px;
+  .bottom-nav {
+    display: flex;
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    max-width: 400px;
+    height: 70px;
+    background: rgba(255, 255, 255, 0.75); 
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 25px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    justify-content: space-around;
+    align-items: center;
+    z-index: 20000;
+  }
+
+  .bottom-nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    color: #111;
+    font-size: 10px;
+    font-weight: 600;
+    font-family: 'Space Grotesk', sans-serif;
+    gap: 4px;
   }
 
   .product-grid {
     grid-template-columns: repeat(2, 1fr);
+    padding: 15px;
     gap: 16px;
-    padding: 20px;
   }
 
-  .product-card {
-    padding: 12px;
-  }
-
-  .product-title {
-    font-size: 0.9rem;
-  }
-
-  .price {
-    font-size: 1rem;
-  }
-  
-  .login-card {
-    padding: 25px;
-    margin: 10px;
-  }
-}
-
-@media (max-width: 480px) {
-  .header {
-    padding: 12px 15px;
-  }
-  
-  .logo {
-    font-size: 18px;
-    letter-spacing: 2px;
-  }
-  
-  .product-grid {
-    grid-template-columns: repeat(2, 1fr);
-    padding: 12px;
-    gap: 10px;
-  }
-
-  .header-right {
-    gap: 12px;
+  body {
+    padding-bottom: 110px;
   }
 }

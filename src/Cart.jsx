@@ -7,9 +7,15 @@ function Cart({ cartItems, removeItem, addToCart, decreaseQty, setPage }) {
   );
 
   return (
-    <div style={{ padding: "40px 40px 140px 40px", maxWidth: "900px", margin: "0 auto" }}>
+    <div className="cart-page-wrapper">
       
       <style>{`
+        .cart-page-wrapper {
+          padding: 40px 40px 140px 40px;
+          maxWidth: 900px;
+          margin: 0 auto;
+        }
+
         @keyframes slideIn {
           from { opacity: 0; transform: translateX(-20px); }
           to { opacity: 1; transform: translateX(0); }
@@ -91,14 +97,48 @@ function Cart({ cartItems, removeItem, addToCart, decreaseQty, setPage }) {
           box-shadow: 0 4px 15px rgba(0,0,0,0.2);
         }
 
-        .checkout-btn:hover {
-          transform: scale(1.03);
-          background: #333;
-          box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        /* --- MOBILE CART FIXES --- */
+        @media (max-width: 600px) {
+          .cart-page-wrapper {
+            padding: 20px 15px 150px 15px;
+          }
+
+          .cart-list-item {
+            flex-direction: row; /* Keep image on left */
+            gap: 15px;
+            padding: 15px;
+            align-items: flex-start;
+          }
+
+          .cart-item-image-container {
+            width: 90px !important;
+            height: 90px !important;
+          }
+
+          .cart-controls-container {
+            align-items: flex-start !important; /* Move + - to left */
+            gap: 10px !important;
+            width: 100%;
+          }
+
+          .qty-picker {
+            padding: 5px 12px !important; /* Slimmer for mobile */
+          }
+
+          .checkout-footer {
+            height: auto;
+            padding: 15px 25px;
+            border-radius: 30px;
+            bottom: 100px; /* Stay above bottom nav bar */
+          }
+
+          .checkout-btn {
+            padding: 10px 20px;
+            font-size: 0.85rem;
+          }
         }
       `}</style>
 
-      {/* Only show if cart is NOT empty */}
       {cartItems.length > 0 && (
         <div className="continue-shopping-btn" onClick={() => setPage("home")}>
           <span className="arrow-icon">←</span> Continue Shopping
@@ -123,18 +163,18 @@ function Cart({ cartItems, removeItem, addToCart, decreaseQty, setPage }) {
           {cartItems.map((item, index) => (
             <div className="cart-list-item" key={item.id} style={{ animationDelay: `${index * 0.1}s` }}>
               
-              <div style={{ width: "130px", height: "130px", flexShrink: 0 }}>
+              <div className="cart-item-image-container" style={{ width: "130px", height: "130px", flexShrink: 0 }}>
                 <img src={item.image} alt={item.name} style={{ width: "100%", height: "100%", objectFit: "cover", borderRadius: "12px" }} />
               </div>
 
               <div style={{ flex: 1 }}>
-                <h3 style={{ margin: "0 0 5px 0", fontSize: "1.2rem" }}>{item.name}</h3>
-                <div style={{ fontSize: "1.3rem", fontWeight: "700" }}>₹{item.price}</div>
-                <div style={{ color: "#27ae60", fontSize: "0.85rem", marginTop: "5px", fontWeight: "600" }}>✓ In Stock</div>
+                <h3 style={{ margin: "0 0 5px 0", fontSize: "1rem" }}>{item.name}</h3>
+                <div style={{ fontSize: "1.2rem", fontWeight: "700" }}>₹{item.price}</div>
+                <div style={{ color: "#27ae60", fontSize: "0.75rem", marginTop: "5px", fontWeight: "600" }}>✓ In Stock</div>
               </div>
 
-              <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: "15px" }}>
-                <div style={{ display: "flex", alignItems: "center", gap: "15px", background: "#f8f8f8", padding: "8px 18px", borderRadius: "50px", border: "1px solid #eee" }}>
+              <div className="cart-controls-container" style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: "15px" }}>
+                <div className="qty-picker" style={{ display: "flex", alignItems: "center", gap: "15px", background: "#f8f8f8", padding: "8px 18px", borderRadius: "50px", border: "1px solid #eee" }}>
                   <button onClick={() => decreaseQty(item.id)} style={{ border: "none", background: "none", cursor: "pointer", fontSize: "1.2rem", fontWeight: "bold" }}>−</button>
                   <span style={{ fontWeight: "700", minWidth: "20px", textAlign: "center" }}>{item.quantity}</span>
                   <button onClick={() => addToCart(item)} style={{ border: "none", background: "none", cursor: "pointer", fontSize: "1.2rem", fontWeight: "bold" }}>+</button>
@@ -142,7 +182,7 @@ function Cart({ cartItems, removeItem, addToCart, decreaseQty, setPage }) {
                 
                 <button 
                   onClick={() => removeItem(item.id)}
-                  style={{ border: "none", background: "none", color: "#888", cursor: "pointer", fontSize: "0.8rem", textDecoration: "underline" }}
+                  style={{ border: "none", background: "none", color: "#888", cursor: "pointer", fontSize: "0.75rem", textDecoration: "underline" }}
                 >
                   Remove Item
                 </button>
@@ -152,12 +192,11 @@ function Cart({ cartItems, removeItem, addToCart, decreaseQty, setPage }) {
         </div>
       )}
 
-      {}
       {cartItems.length > 0 && (
         <div className="checkout-footer">
           <div>
-            <div style={{ fontSize: "0.75rem", color: "#888", textTransform: "uppercase", letterSpacing: "1px" }}>Subtotal</div>
-            <div style={{ fontSize: "1.6rem", fontWeight: "900", letterSpacing: "-0.5px" }}>₹{total}</div>
+            <div style={{ fontSize: "0.65rem", color: "#888", textTransform: "uppercase", letterSpacing: "1px" }}>Subtotal</div>
+            <div style={{ fontSize: "1.4rem", fontWeight: "900", letterSpacing: "-0.5px" }}>₹{total}</div>
           </div>
           
           <button className="checkout-btn">

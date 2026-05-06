@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import './App.css';
 import Cart from './Cart';
 import Login from './Login';
@@ -54,6 +54,7 @@ const ProductCard = ({ product, addToCart, cartItems, index }) => {
 function App() {
   const [cartItems, setCartItems] = useState([]);
   const [page, setPage] = useState("home");
+  const [user, setUser] = useState(null); // Simple user state for tracking fake login
   const [showPopup, setShowPopup] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isChangingPage, setIsChangingPage] = useState(false);
@@ -92,6 +93,12 @@ function App() {
 
   const removeItem = (id) => {
     setCartItems(cartItems.filter(item => item.id !== id));
+  };
+
+  // Mock function for logout
+  const handleLogout = () => {
+    setUser(null);
+    handlePageChange("home");
   };
 
   return (
@@ -234,9 +241,9 @@ function App() {
 
       <header className="header">
         <div className="header-left">
-           <span className="nav-item" onClick={() => handlePageChange("home")}>
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-          </span>
+            <span className="nav-item" onClick={() => handlePageChange("home")}>
+             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+           </span>
         </div>
         
         <h1 className="logo" onClick={() => handlePageChange("home")}>
@@ -244,7 +251,12 @@ function App() {
         </h1>
 
         <div className="header-right">
-          {page !== "login" && (
+          {user ? (
+            <span className="nav-item" onClick={handleLogout}>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+              <span>Logout</span>
+            </span>
+          ) : (
             <span className="nav-item" onClick={() => handlePageChange("login")}>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
               <span>Login</span>
@@ -288,7 +300,7 @@ function App() {
         )}
 
         {page === "cart" && <Cart cartItems={cartItems} removeItem={removeItem} addToCart={addToCart} decreaseQty={decreaseQty} setPage={handlePageChange} />}
-        {page === "login" && <Login />}
+        {page === "login" && <Login onLoginSuccess={(userData) => { setUser(userData); handlePageChange("home"); }} />}
         {page === "contact" && <Contact />}
       </div>
 
