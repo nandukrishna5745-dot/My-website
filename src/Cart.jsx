@@ -158,7 +158,7 @@ function Cart({ cartItems, removeItem, addToCart, decreaseQty, setPage }) {
 
       {cartItems.length > 0 && (
         <div className="continue-shopping-btn" onClick={() => setPage("home")}>
-          <span className="arrow-icon">←</span> Continue Shopping ?
+           Continue Shopping<span className="arrow-icon">↩</span>
         </div>
       )}
       

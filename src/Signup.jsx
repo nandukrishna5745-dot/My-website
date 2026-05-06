@@ -99,7 +99,7 @@ const Signup = ({ onSignupSuccess, switchToLogin }) => {
                 </div>
                 <div>
                   <h3 style={{ margin: 0, fontWeight: '700', fontSize: '1.2rem' }}>Account Created!</h3>
-                  <p style={{ margin: '5px 0 0', opacity: 0.7 }}>Welcome to the family.</p>
+                  <p style={{ margin: '5px 0 0', opacity: 0.7 }}>Welcome to Ezeiiy Store!</p>
                 </div>
               </>
             )}
@@ -112,7 +112,7 @@ const Signup = ({ onSignupSuccess, switchToLogin }) => {
           <h2 style={{ fontWeight: '700', fontSize: '1.4rem', marginBottom: '8px', letterSpacing: '-0.5px' }}>
             CREATE AN ACCOUNT
           </h2>
-          <p style={{ opacity: 0.6 }}>Join Ezeiiy Store for a better experience.</p>
+          <p style={{ opacity: 0.6 }}>Ezeiiy Store.</p>
         </div>
         
         <form className="login-form" onSubmit={handleSignup}>
@@ -121,7 +121,7 @@ const Signup = ({ onSignupSuccess, switchToLogin }) => {
             <input 
               type="text" 
               name="fullName"
-              placeholder="e.g. John Doe" 
+              placeholder="e.g. Nandu" 
               value={formData.fullName}
               onChange={handleChange}
               required 
@@ -133,7 +133,7 @@ const Signup = ({ onSignupSuccess, switchToLogin }) => {
             <input 
               type="email" 
               name="email"
-              placeholder="e.g. name@example.com" 
+              placeholder="e.g. nandu@example.com" 
               value={formData.email}
               onChange={handleChange}
               required 

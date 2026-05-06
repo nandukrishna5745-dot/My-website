@@ -26,7 +26,7 @@ export default function ProductCard({ item, addToCart }) {
           cursor: 'pointer'
         }}
       >
-        Add to Cart
+        Add to Cart ●
       </button>
     </div>
   );
