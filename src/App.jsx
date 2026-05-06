@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { Analytics } from "@vercel/analytics/react";
 import './App.css';
 import Cart from './Cart';
 import Login from './Login';
@@ -54,7 +55,7 @@ const ProductCard = ({ product, addToCart, cartItems, index }) => {
 function App() {
   const [cartItems, setCartItems] = useState([]);
   const [page, setPage] = useState("home");
-  const [user, setUser] = useState(null); // Simple user state for tracking fake login
+  const [user, setUser] = useState(null); 
   const [showPopup, setShowPopup] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isChangingPage, setIsChangingPage] = useState(false);
@@ -93,12 +94,6 @@ function App() {
 
   const removeItem = (id) => {
     setCartItems(cartItems.filter(item => item.id !== id));
-  };
-
-  // Mock function for logout
-  const handleLogout = () => {
-    setUser(null);
-    handlePageChange("home");
   };
 
   return (
@@ -229,6 +224,53 @@ function App() {
           letter-spacing: 1.5px;
           opacity: 0.5;
         }
+
+        /* Glass Floating Bottom Nav */
+        .mobile-bottom-nav { 
+          display: none; 
+        }
+
+        @media (max-width: 768px) {
+          .mobile-bottom-nav { 
+            display: flex; 
+            position: fixed; 
+            bottom: 20px; 
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%; 
+            max-width: 420px;
+            background: rgba(255, 255, 255, 0.75); 
+            backdrop-filter: blur(18px); 
+            -webkit-backdrop-filter: blur(18px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            padding: 12px 0; 
+            justify-content: space-around; 
+            border-radius: 28px; 
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+            z-index: 9999; 
+          }
+          .mobile-nav-item { 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            font-size: 0.65rem; 
+            cursor: pointer; 
+            color: #444;
+            transition: all 0.3s ease;
+            gap: 4px;
+          }
+          .mobile-nav-item.active { color: #000; font-weight: 700; }
+          .cart-badge-mobile { 
+            position: absolute; 
+            top: -4px; 
+            right: -6px; 
+            background: #000; 
+            color: #fff; 
+            font-size: 9px; 
+            padding: 2px 6px; 
+            border-radius: 12px;
+          }
+        }
       `}</style>
 
       {isLoading && (
@@ -241,9 +283,9 @@ function App() {
 
       <header className="header">
         <div className="header-left">
-            <span className="nav-item" onClick={() => handlePageChange("home")}>
-             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-           </span>
+           <span className="nav-item" onClick={() => handlePageChange("home")}>
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          </span>
         </div>
         
         <h1 className="logo" onClick={() => handlePageChange("home")}>
@@ -251,36 +293,10 @@ function App() {
         </h1>
 
         <div className="header-right">
-          {user ? (
-            <span className="nav-item" onClick={handleLogout}>
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
-              <span>Logout</span>
-            </span>
-          ) : (
-            <span className="nav-item" onClick={() => handlePageChange("login")}>
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-              <span>Login</span>
-            </span>
-          )}
-          
           <span className="nav-item" onClick={() => handlePageChange("contact")}>
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
             <span>Contact</span>
           </span>
-          
-          <div
-            onClick={() => handlePageChange("cart")}
-            style={{ cursor: "pointer", position: "relative", display: "flex", alignItems: "center" }}
-          >
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
-            </svg>
-            {cartItems.length > 0 && (
-              <span style={{ position: "absolute", top: "-8px", right: "-10px", background: "#000", color: "#fff", fontSize: "10px", padding: "2px 6px", borderRadius: "50%", fontWeight: "bold" }}>
-                {cartItems.length}
-              </span>
-            )}
-          </div>
         </div>
       </header>
 
@@ -300,10 +316,37 @@ function App() {
         )}
 
         {page === "cart" && <Cart cartItems={cartItems} removeItem={removeItem} addToCart={addToCart} decreaseQty={decreaseQty} setPage={handlePageChange} />}
-        {page === "login" && <Login onLoginSuccess={(userData) => { setUser(userData); handlePageChange("home"); }} />}
+        {page === "login" && <Login onLoginSuccess={(u) => { setUser(u); handlePageChange("home"); }} />}
         {page === "contact" && <Contact />}
       </div>
 
+      <Analytics />
+
+      {/* Floating Glass Bottom Nav */}
+      <nav className="mobile-bottom-nav">
+        <div className={`mobile-nav-item ${page === "home" ? "active" : ""}`} onClick={() => handlePageChange("home")}>
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+          <span>Home</span>
+        </div>
+
+        {user ? (
+          <div className="mobile-nav-item" onClick={() => { setUser(null); handlePageChange("home"); }}>
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+            <span>Logout</span>
+          </div>
+        ) : (
+          <div className={`mobile-nav-item ${page === "login" ? "active" : ""}`} onClick={() => handlePageChange("login")}>
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            <span>Login</span>
+          </div>
+        )}
+
+        <div className={`mobile-nav-item ${page === "cart" ? "active" : ""}`} onClick={() => handlePageChange("cart")} style={{ position: "relative" }}>
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+          {cartItems.length > 0 && <span className="cart-badge-mobile">{cartItems.length}</span>}
+          <span>Cart</span>
+        </div>
+      </nav>
     </div>
   );
 }
