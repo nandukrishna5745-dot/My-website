@@ -11,7 +11,7 @@ const Contact = () => {
         textTransform: "uppercase", 
         letterSpacing: "2px" 
       }}>
-        Get in touch with me! 👋
+        Get in touch with me!
       </h2>
       
       <p style={{ 
@@ -67,8 +67,8 @@ const Contact = () => {
             </svg>
             <h3 style={{ fontFamily: "'Space Grotesk', sans-serif", margin: "10px 0", fontSize: "1.3rem" }}>Email Us</h3>
             <p style={{ fontFamily: "'Inter', sans-serif", color: "#888", fontSize: "0.95rem" }}>
-              Drop a mail<br/>
-              We'll get back to you as soon as possible.
+              Just drop a mail then.<br/>
+              
             </p>
           </div>
         </a>

@@ -141,21 +141,21 @@ function Cart({ cartItems, removeItem, addToCart, decreaseQty, setPage }) {
 
       {cartItems.length > 0 && (
         <div className="continue-shopping-btn" onClick={() => setPage("home")}>
-          <span className="arrow-icon">←</span> Continue Shopping
+          <span className="arrow-icon">←</span> Continue Shopping ?
         </div>
       )}
       
-      <h2 style={{ marginBottom: "30px", fontWeight: "700", fontSize: "2rem" }}>Your Cart 🛒</h2>
+      <h2 style={{ marginBottom: "30px", fontWeight: "700", fontSize: "2rem" }}>Your Cart :</h2>
 
       {cartItems.length === 0 ? (
         <div style={{ textAlign: "center", padding: "100px 0" }}>
-          <p style={{ color: "#888", fontSize: "1.2rem", marginBottom: "30px" }}>Your cart is looking empty.</p>
+          <p style={{ color: "#888", fontSize: "1.2rem", marginBottom: "30px" }}>Nothin in here, its kinda dry as hell...</p>
           <button 
             onClick={() => setPage("home")} 
             className="checkout-btn" 
             style={{ padding: "18px 45px", fontSize: "1.1rem" }}
           >
-            Start Shopping
+            Start Shopping!
           </button>
         </div>
       ) : (
@@ -182,9 +182,9 @@ function Cart({ cartItems, removeItem, addToCart, decreaseQty, setPage }) {
                 
                 <button 
                   onClick={() => removeItem(item.id)}
-                  style={{ border: "none", background: "none", color: "#888", cursor: "pointer", fontSize: "0.75rem", textDecoration: "underline" }}
+                  style={{ border: "none", background: "none", color: "#59614B", cursor: "pointer", fontSize: "0.75rem", textDecoration: "underline" }}
                 >
-                  Remove Item
+                  Remove this item
                 </button>
               </div>
             </div>
@@ -200,7 +200,7 @@ function Cart({ cartItems, removeItem, addToCart, decreaseQty, setPage }) {
           </div>
           
           <button className="checkout-btn">
-            Checkout Now —
+            Buy Now
           </button>
         </div>
       )}

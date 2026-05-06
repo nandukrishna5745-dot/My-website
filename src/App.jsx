@@ -4,6 +4,7 @@ import './App.css';
 import Cart from './Cart';
 import Login from './Login';
 import Contact from './Contact';
+import Signup from './Signup'; // Integrated the new Signup component
 
 const products = [
   { id: 1, name: "Minimal Chair", price: 3655, rating: 4.5, status: "IN STOCK", image: "https://plus.unsplash.com/premium_photo-1681558314333-fb036f1df542?q=80&w=1332&auto=format&fit=crop" },
@@ -16,17 +17,10 @@ const products = [
   { id: 8, name: "Wall Mirror", price: 3000, rating: 4.7, status: "IN STOCK", image: "https://images.unsplash.com/photo-1675807526240-fb2e22e39048?q=80&w=687&auto=format&fit=crop" },
   { id: 9, name: "Pot", price: 460, rating: 3.1, status: "IN STOCK", image: "https://plus.unsplash.com/premium_photo-1764254017283-aaa56ffd7e67?q=80&w=687&auto=format&fit=crop" },
   { id: 10, name: "Mug [Set of 3]", price: 300, rating: 5.0, status: "IN STOCK", image: "https://plus.unsplash.com/premium_photo-1719609141098-44dc2d2ae2de?q=80&w=1106&auto=format&fit=crop" },
-  { id: 11, name: "Wall Decor", price: 2200, rating: 4.2, status: "IN STOCK", image: "https://plus.unsplash.com/premium_photo-1705262413411-5e623427f90a?q=80&w=1041&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
-  { id: 12, name: "Mushroom Lamps", price: 1100, rating: 4.0, status: "IN STOCK", image: "https://images.unsplash.com/photo-1759199112433-524fbd7a4fa4?q=80&w=1074&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
-  { id: 13, name: "Weighted Cotton Throws", price: 4600, rating: 3.8, status: "IN STOCK", image: "https://images.unsplash.com/photo-1721738854083-ae5d99630566?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
-  { 
-  id: 13, 
-  name: "Checkered Rug", 
-  price: 870 , 
-  rating: 3.9, 
-  status: "IN STOCK", 
-  image: "https://images.unsplash.com/photo-1663588772844-060a84940028?q=80&w=1073&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" 
-}
+  { id: 11, name: "Wall Decor Premium", price: 2200, rating: 4.2, status: "IN STOCK", image: "https://plus.unsplash.com/premium_photo-1705262413411-5e623427f90a?q=80&w=1041&auto=format&fit=crop" },
+  { id: 12, name: "Mushroom Lamps", price: 1100, rating: 4.0, status: "IN STOCK", image: "https://images.unsplash.com/photo-1759199112433-524fbd7a4fa4?q=80&w=1074&auto=format&fit=crop" },
+  { id: 13, name: "Weighted Cotton Throws", price: 4600, rating: 3.8, status: "IN STOCK", image: "https://images.unsplash.com/photo-1721738854083-ae5d99630566?q=80&w=1170&auto=format&fit=crop" },
+  { id: 14, name: "Checkered Rug", price: 870 , rating: 3.9, status: "IN STOCK", image: "https://images.unsplash.com/photo-1663588772844-060a84940028?q=80&w=1073&auto=format&fit=crop" }
 ];
 
 const ProductCard = ({ product, addToCart, cartItems, index }) => {
@@ -35,7 +29,7 @@ const ProductCard = ({ product, addToCart, cartItems, index }) => {
   return (
     <div 
       className="product-card fade-in-up" 
-      style={{ animationDelay: `${index * 0.1}s` }}
+      style={{ animationDelay: `${(index % 12) * 0.05}s` }}
     >
       <div className="image-container">
         <img src={product.image} alt={product.name} className="product-image" />
@@ -70,6 +64,30 @@ function App() {
   const [showPopup, setShowPopup] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isChangingPage, setIsChangingPage] = useState(false);
+  
+  const [visibleProducts, setVisibleProducts] = useState(12); 
+  const [isScrollingLoading, setIsScrollingLoading] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (page !== "home" || isScrollingLoading || visibleProducts >= products.length) return;
+
+      const scrollHeight = document.documentElement.scrollHeight;
+      const currentScroll = window.innerHeight + document.documentElement.scrollTop;
+      
+      if (currentScroll >= scrollHeight - 250) {
+        setIsScrollingLoading(true);
+        
+        setTimeout(() => {
+          setVisibleProducts(prev => Math.min(prev + 12, products.length));
+          setIsScrollingLoading(false);
+        }, 1200);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [page, isScrollingLoading, visibleProducts]);
 
   const handlePageChange = (newPage) => {
     setIsLoading(true);
@@ -214,6 +232,26 @@ function App() {
           animation: spin 0.9s cubic-bezier(0.4, 0, 0.2, 1) infinite;
         }
 
+        .scroll-loading-container {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          padding: 60px 0 120px 0;
+          width: 100%;
+          gap: 15px;
+          animation: fadeInUp 0.5s ease;
+        }
+
+        .scroll-loading-container p {
+          font-size: 0.8rem;
+          font-weight: 700;
+          letter-spacing: 1.8px;
+          text-transform: uppercase;
+          color: #444;
+          font-family: 'Space Grotesk', sans-serif;
+        }
+
         .nav-item {
           display: flex;
           align-items: center;
@@ -226,9 +264,7 @@ function App() {
           letter-spacing: 0.5px;
           position: relative;
         }
-        .nav-item:hover {
-          opacity: 0.5;
-        }
+        .nav-item:hover { opacity: 0.5; }
 
         .cart-badge-desktop {
           background: #000;
@@ -239,9 +275,7 @@ function App() {
           margin-left: -4px;
         }
 
-        .mobile-bottom-nav { 
-          display: none; 
-        }
+        .mobile-bottom-nav { display: none; }
 
         @media (max-width: 768px) {
           .mobile-bottom-nav { 
@@ -306,26 +340,23 @@ function App() {
         </h1>
 
         <div className="header-right">
-          {/* LOGIN ICON FOR DESKTOP */}
           {user ? (
             <span className="nav-item" onClick={() => { setUser(null); handlePageChange("home"); }}>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
               <span>Logout</span>
             </span>
           ) : (
-            <span className={`nav-item ${page === "login" ? "active" : ""}`} onClick={() => handlePageChange("login")}>
+            <span className={`nav-item ${page === "login" || page === "signup" ? "active" : ""}`} onClick={() => handlePageChange("login")}>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
               <span>Login</span>
             </span>
           )}
 
-          {/* CONTACT LINK */}
           <span className="nav-item" onClick={() => handlePageChange("contact")}>
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
             <span>Contact</span>
           </span>
 
-          {/* CART ICON FOR DESKTOP */}
           <span className={`nav-item ${page === "cart" ? "active" : ""}`} onClick={() => handlePageChange("cart")}>
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
             <span>Cart</span>
@@ -336,21 +367,44 @@ function App() {
 
       <div className={`page-content ${isChangingPage ? 'page-hidden' : 'page-reveal'}`}>
         {page === "home" && (
-          <main className="product-grid">
-            {products.map((product, index) => (
-              <ProductCard
-                key={product.id}
-                product={product}
-                addToCart={addToCart}
-                cartItems={cartItems}
-                index={index}
-              />
-            ))}
-          </main>
+          <>
+            <main className="product-grid">
+              {products.slice(0, visibleProducts).map((product, index) => (
+                <ProductCard
+                  key={product.id}
+                  product={product}
+                  addToCart={addToCart}
+                  cartItems={cartItems}
+                  index={index}
+                />
+              ))}
+            </main>
+
+            {isScrollingLoading && visibleProducts < products.length && (
+              <div className="scroll-loading-container">
+                <div className="spinner"></div>
+                <p>Loading! Please wait...</p>
+              </div>
+            )}
+          </>
         )}
 
         {page === "cart" && <Cart cartItems={cartItems} removeItem={removeItem} addToCart={addToCart} decreaseQty={decreaseQty} setPage={handlePageChange} />}
-        {page === "login" && <Login onLoginSuccess={(u) => { setUser(u); handlePageChange("home"); }} />}
+        
+        {page === "login" && (
+          <Login 
+            onLoginSuccess={(u) => { setUser(u); handlePageChange("home"); }} 
+            switchToSignup={() => handlePageChange("signup")} 
+          />
+        )}
+
+        {page === "signup" && (
+          <Signup 
+            onSignupSuccess={(u) => { setUser(u); handlePageChange("home"); }} 
+            switchToLogin={() => handlePageChange("login")} 
+          />
+        )}
+
         {page === "contact" && <Contact />}
       </div>
 
@@ -368,7 +422,7 @@ function App() {
             <span>Logout</span>
           </div>
         ) : (
-          <div className={`mobile-nav-item ${page === "login" ? "active" : ""}`} onClick={() => handlePageChange("login")}>
+          <div className={`mobile-nav-item ${page === "login" || page === "signup" ? "active" : ""}`} onClick={() => handlePageChange("login")}>
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
             <span>Login</span>
           </div>

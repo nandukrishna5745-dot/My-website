@@ -1,29 +1,13 @@
 import React, { useState } from 'react';
 import './App.css';
 
-const Login = ({ onLoginSuccess }) => {
+// Added switchToSignup to the destructured props
+const Login = ({ onLoginSuccess, switchToSignup }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
-
   const handleLogin = (e) => {
-    e.preventDefault();
-    if (!email || !password) {
-      alert("Please enter both email and password.");
-      return;
-    }
-    setLoading(true);
-   
-    setTimeout(() => {
-      setLoading(false);
-      alert("Success! Welcome back to Ezeiiy Store.");
-      if (onLoginSuccess) onLoginSuccess({ email }); 
-    }, 1000);
-  };
-
-  // Handle Mock Sign Up
-  const handleSignUp = (e) => {
     e.preventDefault();
     if (!email || !password) {
       alert("Please enter both email and password.");
@@ -33,8 +17,8 @@ const Login = ({ onLoginSuccess }) => {
     
     setTimeout(() => {
       setLoading(false);
-      alert("Account created successfully! (Simulated)");
-      if (onLoginSuccess) onLoginSuccess({ email }); // Updates the user state in App.jsx
+      alert("Success! Welcome back to Ezeiiy Store.");
+      if (onLoginSuccess) onLoginSuccess({ email }); 
     }, 1000);
   };
 
@@ -43,7 +27,7 @@ const Login = ({ onLoginSuccess }) => {
       <div className="login-card">
         <div className="login-header">
           <p style={{ fontWeight: '700', fontSize: '1.4rem', color: '#000', marginBottom: '5px' }}>
-            Ezeiiy Store
+            LOGIN TO YOUR ACCOUNT
           </p>
           <p>Please enter your details to continue.</p>
         </div>
@@ -88,7 +72,7 @@ const Login = ({ onLoginSuccess }) => {
           <p>
             New here?{' '}
             <span 
-              onClick={handleSignUp} 
+              onClick={switchToSignup} // Updated to use the prop for redirection
               style={{ 
                 color: "#000", 
                 fontWeight: "700", 
