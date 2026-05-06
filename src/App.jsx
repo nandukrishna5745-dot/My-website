@@ -15,7 +15,18 @@ const products = [
   { id: 7, name: "Minimal flower pot", price: 700, rating: 3.9, status: "IN STOCK", image: "https://plus.unsplash.com/premium_photo-1677178628367-9469dff27f20?q=80&w=687&auto=format&fit=crop" },
   { id: 8, name: "Wall Mirror", price: 3000, rating: 4.7, status: "IN STOCK", image: "https://images.unsplash.com/photo-1675807526240-fb2e22e39048?q=80&w=687&auto=format&fit=crop" },
   { id: 9, name: "Pot", price: 460, rating: 3.1, status: "IN STOCK", image: "https://plus.unsplash.com/premium_photo-1764254017283-aaa56ffd7e67?q=80&w=687&auto=format&fit=crop" },
-  { id: 10, name: "Mug [Set of 3]", price: 300, rating: 5.0, status: "IN STOCK", image: "https://plus.unsplash.com/premium_photo-1719609141098-44dc2d2ae2de?q=80&w=1106&auto=format&fit=crop" }
+  { id: 10, name: "Mug [Set of 3]", price: 300, rating: 5.0, status: "IN STOCK", image: "https://plus.unsplash.com/premium_photo-1719609141098-44dc2d2ae2de?q=80&w=1106&auto=format&fit=crop" },
+  { id: 11, name: "Wall Decor", price: 2200, rating: 4.2, status: "IN STOCK", image: "https://plus.unsplash.com/premium_photo-1705262413411-5e623427f90a?q=80&w=1041&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
+  { id: 12, name: "Mushroom Lamps", price: 1100, rating: 4.0, status: "IN STOCK", image: "https://images.unsplash.com/photo-1759199112433-524fbd7a4fa4?q=80&w=1074&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
+  { id: 13, name: "Weighted Cotton Throws", price: 4600, rating: 3.8, status: "IN STOCK", image: "https://images.unsplash.com/photo-1721738854083-ae5d99630566?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
+  { 
+  id: 13, 
+  name: "Checkered Rug", 
+  price: 870 , 
+  rating: 3.9, 
+  status: "IN STOCK", 
+  image: "https://images.unsplash.com/photo-1663588772844-060a84940028?q=80&w=1073&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" 
+}
 ];
 
 const ProductCard = ({ product, addToCart, cartItems, index }) => {
