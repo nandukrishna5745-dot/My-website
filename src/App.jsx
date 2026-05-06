@@ -275,9 +275,36 @@ function App() {
           margin-left: -4px;
         }
 
+        /* Updated Header Styles */
+        .header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 20px 5%;
+        }
+
+        .header-logo-wrapper {
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+          background-color: #eee; /* Placeholder bg color */
+          overflow: hidden;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+
+        .header-logo-img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+
         .mobile-bottom-nav { display: none; }
 
         @media (max-width: 768px) {
+          .header-right { display: none; } /* Hide desktop nav on mobile header as requested */
+          
           .mobile-bottom-nav { 
             display: flex; 
             position: fixed; 
@@ -329,17 +356,14 @@ function App() {
       {showPopup && <div className="toast-popup">Added to Cart ✔</div>}
 
       <header className="header">
-        <div className="header-left">
-           <span className="nav-item" onClick={() => handlePageChange("home")}>
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-          </span>
-        </div>
+        {/* Removed header-left div with home icon */}
         
-        <h1 className="logo" style={{cursor: 'pointer', pointerEvents: 'auto'}} onClick={() => handlePageChange("home")}>
+        <h1 className="logo" style={{cursor: 'pointer', pointerEvents: 'auto', margin: 0}} onClick={() => handlePageChange("home")}>
           Ezeiiy Store
         </h1>
 
-        <div className="header-right">
+        <div className="header-right" style={{ display: 'flex', alignItems: 'center', gap: '25px' }}>
+          {/* Desktop Navigation Items */}
           {user ? (
             <span className="nav-item" onClick={() => { setUser(null); handlePageChange("home"); }}>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
@@ -362,6 +386,12 @@ function App() {
             <span>Cart</span>
             {cartItems.length > 0 && <span className="cart-badge-desktop">{cartItems.length}</span>}
           </span>
+
+          {/* New Round Logo Placeholder */}
+          <div className="header-logo-wrapper">
+             {/* Manually add your logo src here */}
+            <img src="" alt="" className="header-logo-img" />
+          </div>
         </div>
       </header>
 
