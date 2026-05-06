@@ -12,7 +12,7 @@ function Cart({ cartItems, removeItem, addToCart, decreaseQty, setPage }) {
       <style>{`
         .cart-page-wrapper {
           padding: 40px 40px 140px 40px;
-          maxWidth: 900px;
+          max-width: 900px;
           margin: 0 auto;
         }
 
@@ -64,77 +64,84 @@ function Cart({ cartItems, removeItem, addToCart, decreaseQty, setPage }) {
           animation: arrowMove 0.8s infinite;
         }
 
+        /* FIXED FOOTER POSITIONING */
         .checkout-footer {
           position: fixed;
-          bottom: 25px;
+          bottom: 30px;
           left: 50%;
           transform: translateX(-50%);
           width: 90%;
           max-width: 650px;
-          height: 90px;
-          background: rgba(255, 255, 255, 0.75);
+          height: 100px; /* Increased height */
+          background: rgba(255, 255, 255, 0.85);
           backdrop-filter: blur(20px);
           -webkit-backdrop-filter: blur(20px);
-          border: 1px solid rgba(255, 255, 255, 0.4);
+          border: 1px solid rgba(0, 0, 0, 0.05);
           border-radius: 100px;
           display: flex;
           align-items: center;
           justify-content: space-between;
-          padding: 0 40px;
+          padding: 0 45px;
           z-index: 2000;
-          box-shadow: 0 15px 35px rgba(0,0,0,0.12);
+          box-shadow: 0 15px 45px rgba(0,0,0,0.15);
         }
 
         .checkout-btn {
           background: #000;
           color: #fff;
-          padding: 14px 32px;
+          padding: 16px 38px;
           border-radius: 50px;
           border: none;
-          font-weight: 600;
+          font-weight: 700;
           cursor: pointer;
           transition: all 0.3s ease;
-          box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+          box-shadow: 0 8px 20px rgba(0,0,0,0.15);
         }
 
         /* --- MOBILE CART FIXES --- */
         @media (max-width: 600px) {
           .cart-page-wrapper {
-            padding: 20px 15px 150px 15px;
+            padding: 20px 15px 180px 15px; /* More bottom padding for scroll */
           }
 
           .cart-list-item {
-            flex-direction: row; /* Keep image on left */
+            flex-direction: row; 
             gap: 15px;
             padding: 15px;
-            align-items: flex-start;
+            align-items: center;
           }
 
           .cart-item-image-container {
-            width: 90px !important;
-            height: 90px !important;
+            width: 80px !important;
+            height: 80px !important;
           }
 
           .cart-controls-container {
-            align-items: flex-start !important; /* Move + - to left */
-            gap: 10px !important;
-            width: 100%;
+            align-items: flex-end !important;
+            gap: 8px !important;
           }
 
           .qty-picker {
-            padding: 5px 12px !important; /* Slimmer for mobile */
+            padding: 4px 12px !important;
+            gap: 10px !important;
           }
 
+          /* Fixed: Increased spacing for Buy Now section */
           .checkout-footer {
-            height: auto;
-            padding: 15px 25px;
-            border-radius: 30px;
-            bottom: 100px; /* Stay above bottom nav bar */
+            height: 85px;
+            padding: 0 25px;
+            border-radius: 35px;
+            bottom: 110px; /* Stayed clearly above your floating mobile nav */
+            width: 92%;
           }
 
           .checkout-btn {
-            padding: 10px 20px;
-            font-size: 0.85rem;
+            padding: 12px 24px;
+            font-size: 0.9rem;
+          }
+
+          .subtotal-amount {
+            font-size: 1.2rem !important;
           }
         }
       `}</style>
@@ -168,9 +175,9 @@ function Cart({ cartItems, removeItem, addToCart, decreaseQty, setPage }) {
               </div>
 
               <div style={{ flex: 1 }}>
-                <h3 style={{ margin: "0 0 5px 0", fontSize: "1rem" }}>{item.name}</h3>
-                <div style={{ fontSize: "1.2rem", fontWeight: "700" }}>₹{item.price}</div>
-                <div style={{ color: "#27ae60", fontSize: "0.75rem", marginTop: "5px", fontWeight: "600" }}>✓ In Stock</div>
+                <h3 style={{ margin: "0 0 5px 0", fontSize: "0.95rem", fontWeight: "600" }}>{item.name}</h3>
+                <div className="subtotal-amount" style={{ fontSize: "1.2rem", fontWeight: "700" }}>₹{item.price}</div>
+                <div style={{ color: "#27ae60", fontSize: "0.7rem", marginTop: "5px", fontWeight: "600" }}>✓ In Stock</div>
               </div>
 
               <div className="cart-controls-container" style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: "15px" }}>
@@ -182,9 +189,9 @@ function Cart({ cartItems, removeItem, addToCart, decreaseQty, setPage }) {
                 
                 <button 
                   onClick={() => removeItem(item.id)}
-                  style={{ border: "none", background: "none", color: "#59614B", cursor: "pointer", fontSize: "0.75rem", textDecoration: "underline" }}
+                  style={{ border: "none", background: "none", color: "#888", cursor: "pointer", fontSize: "0.7rem", textDecoration: "underline" }}
                 >
-                  Remove this item
+                  Remove
                 </button>
               </div>
             </div>
@@ -195,8 +202,8 @@ function Cart({ cartItems, removeItem, addToCart, decreaseQty, setPage }) {
       {cartItems.length > 0 && (
         <div className="checkout-footer">
           <div>
-            <div style={{ fontSize: "0.65rem", color: "#888", textTransform: "uppercase", letterSpacing: "1px" }}>Subtotal</div>
-            <div style={{ fontSize: "1.4rem", fontWeight: "900", letterSpacing: "-0.5px" }}>₹{total}</div>
+            <div style={{ fontSize: "0.65rem", color: "#888", textTransform: "uppercase", letterSpacing: "1px", fontWeight: "700" }}>Subtotal</div>
+            <div className="subtotal-amount" style={{ fontSize: "1.4rem", fontWeight: "900", letterSpacing: "-0.5px" }}>₹{total}</div>
           </div>
           
           <button className="checkout-btn">

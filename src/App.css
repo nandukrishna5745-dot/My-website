@@ -20,7 +20,7 @@ html {
   scroll-behavior: smooth;
 }
 
-/* --- HEADER SECTION (UPDATED FOR LOGO) --- */
+/* --- HEADER SECTION --- */
 .header {
   display: flex;
   align-items: center;
@@ -58,7 +58,6 @@ html {
   transform: scale(0.9);
 }
 
-/* FIXED: Removed absolute positioning so it doesn't overlap logo on mobile */
 .logo {
   font-family: 'Space Grotesk', sans-serif;
   font-size: 42px; 
@@ -73,7 +72,6 @@ html {
   margin: 0;
 }
 
-/* Wrapper for Nav and Logo */
 .header-actions-wrapper {
   display: flex;
   align-items: center;
@@ -90,7 +88,6 @@ html {
   align-items: center;
 }
 
-/* The New Logo Space */
 .header-logo-wrapper {
   width: 45px;
   height: 45px;
@@ -421,6 +418,43 @@ html {
   box-shadow: 0 10px 25px rgba(0,0,0,0.15);
 }
 
+/* --- CART PAGE & BUTTON FIXES --- */
+.cart-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+.cart-summary {
+  margin-top: 40px;
+  padding: 40px;
+  background: #ffffff;
+  border-radius: 32px;
+  border: 1px solid rgba(0,0,0,0.05);
+}
+
+.buy-now-btn {
+  width: 100%;
+  background: #000;
+  color: #fff;
+  padding: 22px;
+  border-radius: 20px;
+  font-weight: 700;
+  font-size: 1rem;
+  border: none;
+  cursor: pointer;
+  margin-top: 35px; /* Added spacing to separate from price details */
+  transition: all 0.3s cubic-bezier(0.2, 1, 0.2, 1);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.buy-now-btn:hover {
+  background: #222;
+  transform: translateY(-3px);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
 /* --- CONTACT PAGE --- */
 .contact-page {
   animation: contactFadeIn 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
@@ -462,21 +496,38 @@ html {
     font-size: 24px;
     letter-spacing: 4px;
     flex: 1;
-    text-align: left; /* Aligns Ezeiiy Store to the left */
+    text-align: left;
   }
 
   .header-actions-wrapper {
-    flex: 0; /* Shrinks the right side wrapper to just fit the logo */
+    flex: 0;
   }
 
   .header-right {
-    display: none !important; /* Hides desktop Login/Cart top nav */
+    display: none !important;
   }
 
   .header-logo-wrapper {
     width: 38px;
     height: 38px;
-    display: flex !important; /* Forces logo visible on mobile */
+    display: flex !important;
+  }
+
+  /* CART MOBILE UPDATES */
+  .cart-container {
+    padding: 20px 15px 140px 15px; /* Added extra bottom padding */
+  }
+
+  .cart-summary {
+    padding: 25px;
+    margin-top: 20px;
+  }
+
+  .buy-now-btn {
+    padding: 20px;
+    margin-top: 40px; /* Stronger separation on small screens */
+    margin-bottom: 20px;
+    font-size: 0.9rem;
   }
 
   .mobile-bottom-nav {
