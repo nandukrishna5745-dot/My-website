@@ -148,6 +148,22 @@ function App() {
           animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
+        /* HEADER GLASS EFFECT FIX */
+        .header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 0 5%;
+          height: 90px;
+          position: sticky;
+          top: 0;
+          z-index: 10000;
+          background-color: rgba(255, 251, 244, 0.8); /* Slightly more transparent */
+          backdrop-filter: blur(20px) saturate(180%);
+          -webkit-backdrop-filter: blur(20px) saturate(180%);
+          border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
         .page-content {
           transition: opacity 0.5s ease, transform 0.5s ease;
           opacity: 1;
@@ -276,13 +292,6 @@ function App() {
           margin-left: -4px;
         }
 
-        .header {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          padding: 20px 5%;
-        }
-
         .header-logo-wrapper {
           width: 55px;
           height: 55px;
@@ -304,6 +313,11 @@ function App() {
         .mobile-bottom-nav { display: none; }
 
         @media (max-width: 768px) {
+          .header {
+             height: 80px;
+             padding: 0 20px;
+          }
+          
           .header-right { display: none; }
           
           .mobile-bottom-nav { 
