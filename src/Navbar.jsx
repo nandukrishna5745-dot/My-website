@@ -5,7 +5,7 @@ export default function Navbar({ setPage, cartItemsCount }) {
 
   return (
     <>
-      {/* --- TOP HEADER --- */}
+      {}
       <header className="header">
         <div className="header-left">
           <div 
@@ -17,13 +17,13 @@ export default function Navbar({ setPage, cartItemsCount }) {
           </div>
         </div>
 
-        {/* FIXED: Removed onClick handler; this is now just a static name */}
+        {}
         <div className="logo">
           Ezeiiy Store
         </div>
 
         <div className="header-right">
-          {/* Home button with icon as the primary navigation */}
+          {}
           <a href="#" onClick={(e) => { e.preventDefault(); setPage('home'); }}>
             <svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
               <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
@@ -38,7 +38,7 @@ export default function Navbar({ setPage, cartItemsCount }) {
         </div>
       </header>
 
-      {/* --- FLOATING GLASS BOTTOM NAV (Mobile Only) --- */}
+      {}
       <nav className="bottom-nav">
         <div className="bottom-nav-item" onClick={() => setPage('home')}>
           <svg width="22" height="22" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg>
@@ -62,7 +62,7 @@ export default function Navbar({ setPage, cartItemsCount }) {
         </div>
       </nav>
 
-      {/* --- SIDEBAR & OVERLAY --- */}
+      {}
       {isOpen && (
         <div
           className="overlay"

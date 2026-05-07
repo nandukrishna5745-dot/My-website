@@ -7,9 +7,9 @@ html, body {
   padding: 0;
   width: 100%;
   max-width: 100vw;
-  overflow-x: hidden; /* This stops the horizontal scroll/zoom */
+  overflow-x: hidden;
   position: relative;
-  touch-action: manipulation; /* Improves mobile tapping */
+  touch-action: manipulation; 
 }
 
 #root {

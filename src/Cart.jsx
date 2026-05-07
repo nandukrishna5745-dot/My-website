@@ -166,7 +166,7 @@ function Cart({ cartItems, removeItem, addToCart, decreaseQty, setPage }) {
 
       {cartItems.length === 0 ? (
         <div style={{ textAlign: "center", padding: "100px 0" }}>
-          <p style={{ opacity: 0.5, fontSize: "1.2rem", marginBottom: "30px" }}>Nothin in here, its kinda dry as hell...</p>
+          <p style={{ opacity: 0.5, fontSize: "1.2rem", marginBottom: "30px" }}>Nothin in here, its dry as hell...</p>
           <button 
             onClick={() => setPage("home")} 
             className="checkout-btn" 

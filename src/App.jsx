@@ -192,7 +192,7 @@ function App() {
   const [visibleProducts, setVisibleProducts] = useState(12); 
   const [isScrollingLoading, setIsScrollingLoading] = useState(false);
 
-  // FIX FOR WHITE BACKGROUND ON MOBILE SCROLL/OVERSCROLL
+
   useEffect(() => {
     if (darkMode) {
       document.body.classList.add('dark-mode');

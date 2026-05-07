@@ -44,7 +44,7 @@ const Signup = ({ onSignupSuccess, switchToLogin }) => {
 
   return (
     <div className="login-container">
-      {/* --- SUCCESS/LOADING OVERLAY --- */}
+      {}
       {(loading || showSuccess) && (
         <div style={{
           position: 'fixed',

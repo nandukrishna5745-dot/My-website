@@ -1,6 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700;800&display=swap');
 
-/* --- DARK MODE OVERRIDES --- */
 html, body {
   min-height: 100vh;
   margin: 0;
@@ -83,7 +82,6 @@ body.dark-mode {
   color: #fff !important;
 }
 
-/* --- ORIGINAL CODE STARTS HERE --- */
 
 body {
   margin: 0;
@@ -106,7 +104,7 @@ html {
   scroll-behavior: smooth;
 }
 
-/* --- HEADER SECTION --- */
+
 .header {
   display: flex;
   align-items: center;
@@ -215,7 +213,6 @@ html {
   transform: translateY(-1px);
 }
 
-/* --- ANIMATIONS --- */
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
@@ -243,7 +240,6 @@ html {
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* --- OVERLAYS & SPINNERS --- */
 .loading-overlay {
   position: fixed;
   top: 0; 
@@ -268,7 +264,6 @@ html {
   animation: spin 0.85s cubic-bezier(0.4, 0, 0.2, 1) infinite;
 }
 
-/* --- PRODUCT GRID --- */
 .product-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -404,7 +399,7 @@ html {
   position: fixed;
   bottom: 120px; 
   left: 50%;
-  transform: translateX(-50%); /* Consistent horizontal centering */
+  transform: translateX(-50%); 
   background: #111;
   color: #fff;
   padding: 16px 32px;
@@ -416,7 +411,7 @@ html {
   animation: slideFade 2s cubic-bezier(0.19, 1, 0.22, 1) forwards;
 }
 
-/* --- LOGIN & FORMS --- */
+
 .login-container {
   min-height: 85vh;
   display: flex;
@@ -505,7 +500,7 @@ html {
   box-shadow: 0 10px 25px rgba(0,0,0,0.15);
 }
 
-/* --- CONTACT PAGE --- */
+
 .contact-page {
   animation: contactFadeIn 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   padding: 80px 25px;
@@ -534,7 +529,7 @@ html {
   display: none !important;
 }
 
-/* --- RESPONSIVE MEDIA QUERIES --- */
+
 @media (max-width: 768px) {
   
   .header {
@@ -654,7 +649,3 @@ html {
     gap: 45px;
   }
 }
-
-/* This takes the file to the full line count required */
-/* Final padding to maintain file integrity and responsiveness */
-/* End of CSS file - All requested issues resolved successfully */

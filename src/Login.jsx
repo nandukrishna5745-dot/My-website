@@ -16,7 +16,6 @@ const Login = ({ onLoginSuccess, switchToSignup }) => {
     
     setLoading(true);
     
-    // Simulate API call
     setTimeout(() => {
       setLoading(false);
       setShowSuccess(true);
@@ -30,12 +29,12 @@ const Login = ({ onLoginSuccess, switchToSignup }) => {
 
   return (
     <div className="login-container">
-      {/* --- CUSTOM POPUP OVERLAY --- */}
+      {}
       {(loading || showSuccess) && (
         <div style={{
           position: 'fixed',
           inset: 0,
-          backgroundColor: 'rgba(0, 0, 0, 0.4)', // Slightly darker for better contrast
+          backgroundColor: 'rgba(0, 0, 0, 0.4)', 
           backdropFilter: 'blur(8px)',
           display: 'flex',
           alignItems: 'center',
@@ -43,7 +42,7 @@ const Login = ({ onLoginSuccess, switchToSignup }) => {
           zIndex: 1000,
           transition: 'all 0.3s ease'
         }}>
-          <div className="login-card" style={{ // Reusing login-card class for dark mode compatibility
+          <div className="login-card" style={{ 
             padding: '40px',
             borderRadius: '2.5rem',
             boxShadow: '0 20px 40px rgba(0,0,0,0.2)',
